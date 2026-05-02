@@ -93,7 +93,7 @@
 <script>
   const full = window.location.pathname;
   document.getElementById('path').textContent = full;
-  const trimmed = full.replace(/^\/command-block\/?/, '').replace(/\/$/, '');
+  const trimmed = full.replace(/^\//, '').replace(/\/$/, '');
   document.getElementById('bad-path').textContent = trimmed || '404';
 </script>
 
