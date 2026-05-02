@@ -143,15 +143,22 @@ main.wide { max-width: none; }
 .crumb a:hover { color: var(--ink); }
 
 /* ---------- ASCII BANNER ---------- */
+.banner { margin-bottom: 28px; }
 .ascii-banner {
   font-family: 'IBM Plex Mono', ui-monospace, monospace;
-  font-size: 11px;
+  font-size: 10px;
   line-height: 1;
   color: var(--mute-2);
-  margin-bottom: 28px;
   white-space: pre;
   overflow: hidden;
   user-select: none;
+  margin: 0;
+}
+.banner-sub {
+  margin-top: 10px;
+  font-size: 11px;
+  color: var(--mute);
+  font-style: italic;
 }
 
 /* ---------- DOC HEADER ---------- */
@@ -616,5 +623,5 @@ footer {
   .form-row { grid-template-columns: 1fr; gap: 2px; }
   .editor-wrap { grid-template-columns: 1fr; }
   .actions { grid-template-columns: 1fr; }
-  .ascii-banner { display: none; }
+  .banner { display: none; }
 }
