@@ -2,36 +2,90 @@ import { api, API, formatBytes, formatDate } from '../assets/app.js';
 
 const $ = (id) => document.getElementById(id);
 
+let plugins = [];
+let sortBy = 'uploaded';
+let sortDir = 'desc';
+let filter = '';
+
+const sortKey = {
+  name: (p) => (p.name || '').toLowerCase(),
+  version: (p) => (p.version || '').toLowerCase(),
+  size: (p) => p.size_bytes || 0,
+  uploaded: (p) => p.uploaded_at || '',
+};
+
 async function loadPlugins() {
   try {
-    const plugins = await api('/plugins');
-    const body = $('plugins-body');
-    $('count').textContent = `${plugins.length} ${plugins.length === 1 ? 'file' : 'files'}`;
-
-    if (plugins.length === 0) {
-      body.innerHTML = `<tr><td class="empty" colspan="5">no plugins uploaded yet</td></tr>`;
-      return;
-    }
-
-    body.innerHTML = plugins.map(p => `
-      <tr data-id="${p.id}">
-        <td class="name">${escapeHtml(p.name)}</td>
-        <td>${escapeHtml(p.version || '—')}</td>
-        <td>${formatBytes(p.size_bytes)}</td>
-        <td>${formatDate(p.uploaded_at)}</td>
-        <td class="row-actions">
-          <a href="${API}/plugins/${p.id}/download">download</a>
-          <button class="danger" data-delete="${p.id}">delete</button>
-        </td>
-      </tr>
-    `).join('');
-
-    body.querySelectorAll('[data-delete]').forEach(btn => {
-      btn.addEventListener('click', () => deletePlugin(btn.dataset.delete));
-    });
+    plugins = await api('/plugins');
+    render();
   } catch (err) {
     $('plugins-body').innerHTML = `<tr><td class="empty" colspan="5">error: ${err.message}</td></tr>`;
   }
+}
+
+function render() {
+  const body = $('plugins-body');
+  const f = filter.trim().toLowerCase();
+  const filtered = f
+    ? plugins.filter(p => (p.name || '').toLowerCase().includes(f))
+    : plugins;
+
+  const key = sortKey[sortBy];
+  const dir = sortDir === 'asc' ? 1 : -1;
+  const sorted = [...filtered].sort((a, b) => {
+    const va = key(a), vb = key(b);
+    if (va < vb) return -1 * dir;
+    if (va > vb) return 1 * dir;
+    return 0;
+  });
+
+  if (plugins.length === 0) {
+    $('count').textContent = '0 files';
+    body.innerHTML = `<tr><td class="empty" colspan="5">no plugins uploaded yet</td></tr>`;
+    return;
+  }
+
+  $('count').textContent = f
+    ? `${sorted.length} of ${plugins.length}`
+    : `${plugins.length} ${plugins.length === 1 ? 'file' : 'files'}`;
+
+  if (sorted.length === 0) {
+    body.innerHTML = `<tr><td class="empty" colspan="5">no matches</td></tr>`;
+    return;
+  }
+
+  body.innerHTML = sorted.map(p => `
+    <tr data-id="${p.id}">
+      <td class="name">${escapeHtml(p.name)}</td>
+      <td>${escapeHtml(p.version || '—')}</td>
+      <td>${formatBytes(p.size_bytes)}</td>
+      <td>${formatDate(p.uploaded_at)}</td>
+      <td class="row-actions">
+        <a href="${API}/plugins/${p.id}/download">download</a>
+        <button class="danger" data-delete="${p.id}">delete</button>
+      </td>
+    </tr>
+  `).join('');
+
+  body.querySelectorAll('[data-delete]').forEach(btn => {
+    btn.addEventListener('click', () => deletePlugin(btn.dataset.delete));
+  });
+}
+
+function setSort(col) {
+  if (sortBy === col) {
+    sortDir = sortDir === 'asc' ? 'desc' : 'asc';
+  } else {
+    sortBy = col;
+    sortDir = col === 'uploaded' || col === 'size' ? 'desc' : 'asc';
+  }
+  document.querySelectorAll('th.sortable').forEach(th => {
+    const active = th.dataset.sort === sortBy;
+    th.classList.toggle('active', active);
+    const arrow = th.querySelector('.arrow');
+    if (arrow) arrow.textContent = active ? (sortDir === 'asc' ? '↑' : '↓') : '';
+  });
+  render();
 }
 
 async function uploadPlugin() {
@@ -89,4 +143,14 @@ function escapeHtml(s) {
 }
 
 $('upload-btn').addEventListener('click', uploadPlugin);
+
+$('search').addEventListener('input', (e) => {
+  filter = e.target.value;
+  render();
+});
+
+document.querySelectorAll('th.sortable').forEach(th => {
+  th.addEventListener('click', () => setSort(th.dataset.sort));
+});
+
 loadPlugins();

@@ -85,15 +85,18 @@
     <section>
       <div class="sec-head">
         <h2><span class="num">[02]</span>archive</h2>
-        <span class="count" id="count">—</span>
+        <div class="sec-head-right">
+          <input type="text" class="search" id="search" placeholder="filter by name…" autocomplete="off">
+          <span class="count" id="count">—</span>
+        </div>
       </div>
-      <table class="plugins" id="plugins-table">
+      <table class="plugins dense" id="plugins-table">
         <thead>
           <tr>
-            <th style="width:24%">name</th>
-            <th style="width:14%">version</th>
-            <th style="width:12%">size</th>
-            <th style="width:22%">uploaded</th>
+            <th class="sortable" data-sort="name" style="width:24%">name <span class="arrow"></span></th>
+            <th class="sortable" data-sort="version" style="width:14%">version <span class="arrow"></span></th>
+            <th class="sortable" data-sort="size" style="width:12%">size <span class="arrow"></span></th>
+            <th class="sortable active" data-sort="uploaded" style="width:22%">uploaded <span class="arrow">↓</span></th>
             <th>actions</th>
           </tr>
         </thead>

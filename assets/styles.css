@@ -189,6 +189,22 @@ section { margin-bottom: 44px; }
   color: var(--mute);
   font-size: 11px;
 }
+.sec-head-right {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+.sec-head-right .search {
+  font-family: inherit;
+  font-size: 11px;
+  border: 1px solid var(--rule-2);
+  background: var(--bg);
+  color: var(--ink);
+  padding: 3px 8px;
+  width: 180px;
+  border-radius: 0;
+}
+.sec-head-right .search:focus { outline: none; border-color: var(--ink); }
 
 /* ---------- INFRA / KV BLOCKS ---------- */
 .infra {
@@ -240,6 +256,14 @@ table.plugins th {
   padding-top: 8px;
 }
 table.plugins tr:hover td { background: var(--hover); }
+table.plugins th.sortable { cursor: pointer; user-select: none; }
+table.plugins th.sortable:hover { color: var(--ink); }
+table.plugins th.sortable.active { color: var(--ink); }
+table.plugins th .arrow { color: var(--mute-2); margin-left: 4px; }
+table.plugins th.sortable.active .arrow { color: var(--ink); }
+table.plugins.dense th,
+table.plugins.dense td { padding: 4px 12px 4px 0; }
+table.plugins.dense th { padding-top: 4px; padding-bottom: 4px; }
 table.plugins .name { font-weight: 500; }
 table.plugins .name a:hover { text-decoration: underline; text-underline-offset: 2px; }
 table.plugins .role { color: var(--mute); }
