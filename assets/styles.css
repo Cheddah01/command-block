@@ -121,6 +121,10 @@ nav li a:hover {
   text-decoration: none;
   background: var(--hover);
 }
+nav li a.active {
+  color: var(--ink);
+  font-weight: 500;
+}
 
 /* ---------- MAIN ---------- */
 main {
@@ -243,6 +247,124 @@ table.plugins .links a {
 }
 table.plugins .links a:hover { color: var(--ink); text-decoration: underline; }
 table.plugins .links a:last-child { margin-right: 0; }
+table.plugins td.empty {
+  text-align: center;
+  color: var(--mute);
+  padding: 24px 0;
+  font-style: italic;
+}
+
+/* ---------- FORMS ---------- */
+.form {
+  border-top: 1px solid var(--rule-2);
+  border-bottom: 1px solid var(--rule);
+  padding: 16px 0;
+}
+.form-row {
+  display: grid;
+  grid-template-columns: 100px 1fr;
+  align-items: center;
+  padding: 4px 0;
+  font-size: 11px;
+}
+.form-row label {
+  color: var(--mute);
+}
+.form input[type="text"],
+.form input[type="file"],
+.form textarea {
+  font-family: inherit;
+  font-size: 11px;
+  border: 1px solid var(--rule-2);
+  background: var(--bg);
+  color: var(--ink);
+  padding: 5px 8px;
+  width: 100%;
+  border-radius: 0;
+}
+.form input[type="text"]:focus,
+.form textarea:focus {
+  outline: none;
+  border-color: var(--ink);
+}
+.form input[type="file"] {
+  padding: 4px;
+}
+.form textarea {
+  min-height: 50px;
+  resize: vertical;
+}
+.form-actions {
+  display: flex;
+  justify-content: flex-end;
+  gap: 8px;
+  margin-top: 8px;
+}
+
+/* ---------- BUTTONS ---------- */
+.btn {
+  font-family: inherit;
+  font-size: 11px;
+  background: var(--bg);
+  color: var(--ink);
+  border: 1px solid var(--rule-2);
+  padding: 5px 12px;
+  cursor: pointer;
+  border-radius: 0;
+}
+.btn:hover {
+  background: var(--ink);
+  color: var(--bg);
+  border-color: var(--ink);
+}
+.btn.primary {
+  background: var(--ink);
+  color: var(--bg);
+  border-color: var(--ink);
+}
+.btn.primary:hover {
+  background: var(--bg);
+  color: var(--ink);
+}
+.btn.danger:hover {
+  background: var(--live);
+  color: var(--bg);
+  border-color: var(--live);
+}
+.btn:disabled {
+  opacity: 0.4;
+  cursor: not-allowed;
+}
+
+/* ---------- STATUS LINE ---------- */
+.status {
+  font-size: 11px;
+  color: var(--mute);
+  padding: 6px 0;
+}
+.status.ok { color: var(--ink-2); }
+.status.err { color: var(--live); }
+
+/* ---------- INLINE ACTIONS ---------- */
+.row-actions a,
+.row-actions button {
+  font-family: inherit;
+  font-size: 11px;
+  background: none;
+  border: none;
+  color: var(--mute);
+  cursor: pointer;
+  padding: 0;
+  margin-right: 12px;
+}
+.row-actions a:hover,
+.row-actions button:hover {
+  color: var(--ink);
+  text-decoration: underline;
+}
+.row-actions button.danger:hover {
+  color: var(--live);
+}
 
 /* ---------- NOTES BLOCK ---------- */
 .notes {
@@ -283,4 +405,5 @@ footer {
   main { padding: 24px 20px 60px; }
   .infra { grid-template-columns: 1fr; }
   .infra .col + .col { border-left: none; border-top: 1px solid var(--rule); padding-left: 0; padding-top: 12px; }
+  .form-row { grid-template-columns: 1fr; gap: 2px; }
 }
