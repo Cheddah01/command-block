@@ -1,0 +1,7 @@
+HANDOFF.md
+schema.sql
+worker.js
+.DS_Store
+node_modules
+dist
+.claude/settings.local.json
