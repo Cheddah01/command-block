@@ -1,35 +1,21 @@
 # Deployment notes
 
-## After every push
+## Frontend
 
-GitHub Actions (`.github/workflows/deploy.yml`) builds the site to `dist/`
-and publishes it to GitHub Pages at https://cheddah01.github.io/command-block/.
-No manual step needed for normal deploys.
+Hosted on Cloudflare Pages, project name `command-block`. Pushes to `main`
+trigger an automatic build (`npm run build`) and publish `dist/`. Public
+landing at `https://command-block.pages.dev/`; admin pages at
+`https://command-block.pages.dev/ops/*`.
 
-## Cloudflare Access on /ops/*
+## Cloudflare Access
 
-After the first deploy of the new public/ops split, **add a Cloudflare Access
-self-hosted application protecting `cheddah01.github.io/command-block/ops/*`
-using the existing `Admins` policy.**
+A self-hosted Access application protects `command-block.pages.dev/ops/*`
+using the existing `Admins` policy. The same Access team also gates the
+Worker at `command-block-api.colbysthickey.workers.dev`. One GitHub OAuth
+login covers both within a session.
 
-> ⚠️ **Important — this likely won't work as-is.** Cloudflare Access can only
-> protect hostnames that are either (a) zones on your Cloudflare account, or
-> (b) `*.pages.dev` hostnames on Cloudflare Pages. `cheddah01.github.io` is a
-> github.io subdomain owned by GitHub, so you cannot add it as a zone — which
-> means CF Access cannot directly gate the static admin pages there.
->
-> Until this is resolved, the `/ops/*` HTML pages are **publicly readable**.
-> The Worker that serves the actual data IS still behind Access, so without
-> a valid Cloudflare Access cookie the pages render empty (API calls fail).
-> But anyone can see the page shell and JS source.
->
-> ### Two ways to actually gate /ops/*
->
-> 1. **Custom domain on Cloudflare** — add a domain you own (e.g.
->    `ops.cheddah.dev`) on Cloudflare, CNAME it to `cheddah01.github.io`,
->    set the GitHub Pages custom domain in repo settings, then add the
->    Access application on `your-domain/command-block/ops/*`.
->
-> 2. **Move frontend to Cloudflare Pages** — connect this repo to Cloudflare
->    Pages instead of GitHub Pages. The site is then served from a hostname
->    on Cloudflare, where CF Access policies work directly.
+## Worker
+
+Source: `github.com/cheddah01/command-block-api`. Pushes to `main` trigger
+Cloudflare Workers Builds, which runs `wrangler deploy`. Bindings (R2 FILES,
+D1 DB) are declared in `wrangler.toml`.
