@@ -1,0 +1,208 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>plugins / cozy-crafters/ops</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@300;400;500;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="assets/styles.css">
+</head>
+<body>
+
+<div class="layout">
+
+  <!-- ============ SIDEBAR ============ -->
+  <aside>
+    <div class="brand">
+      <span class="dot"></span>
+      <h1>cozy-crafters<span class="ver">/ops</span></h1>
+    </div>
+
+    <div class="meta">
+      <div class="row"><span>build</span><span>paper 1.21</span></div>
+      <div class="row"><span>season</span><span>02</span></div>
+      <div class="row live"><span>status</span><span>online</span></div>
+    </div>
+
+    <nav>
+      <div class="group">
+        <h2>pages/</h2>
+        <ul>
+          <li><a href="index.html">index</a></li>
+          <li><a href="plugins.html" class="active">plugins</a></li>
+        </ul>
+      </div>
+    </nav>
+  </aside>
+
+  <!-- ============ MAIN ============ -->
+  <main>
+
+    <div class="crumb">
+      ~<span class="sep">/</span>ops<span class="sep">/</span>plugins
+    </div>
+
+    <div class="doc-head">
+      <div class="kicker">internal · plugin storage</div>
+      <h1>plugins <span class="dim">// jar archive</span></h1>
+      <p>upload, store, and download plugin jars. files live in r2, metadata in d1.</p>
+    </div>
+
+    <!-- UPLOAD -->
+    <section>
+      <div class="sec-head">
+        <h2><span class="num">[01]</span>upload</h2>
+        <span class="count" id="upload-status">ready</span>
+      </div>
+      <div class="form">
+        <div class="form-row">
+          <label for="f-file">file</label>
+          <input type="file" id="f-file" accept=".jar">
+        </div>
+        <div class="form-row">
+          <label for="f-name">name</label>
+          <input type="text" id="f-name" placeholder="auto from filename">
+        </div>
+        <div class="form-row">
+          <label for="f-version">version</label>
+          <input type="text" id="f-version" placeholder="e.g. 5.4.139">
+        </div>
+        <div class="form-row">
+          <label for="f-notes">notes</label>
+          <textarea id="f-notes" placeholder="optional notes about this build"></textarea>
+        </div>
+        <div class="form-actions">
+          <button class="btn primary" id="upload-btn">upload</button>
+        </div>
+      </div>
+    </section>
+
+    <!-- LIST -->
+    <section>
+      <div class="sec-head">
+        <h2><span class="num">[02]</span>archive</h2>
+        <span class="count" id="count">—</span>
+      </div>
+      <table class="plugins" id="plugins-table">
+        <thead>
+          <tr>
+            <th style="width:24%">name</th>
+            <th style="width:14%">version</th>
+            <th style="width:12%">size</th>
+            <th style="width:22%">uploaded</th>
+            <th>actions</th>
+          </tr>
+        </thead>
+        <tbody id="plugins-body">
+          <tr><td class="empty" colspan="5">loading...</td></tr>
+        </tbody>
+      </table>
+    </section>
+
+    <footer>
+      <span>cozy-crafters/ops · season 02</span>
+      <span id="footer-status">—</span>
+    </footer>
+
+  </main>
+</div>
+
+<script type="module">
+import { api, API, formatBytes, formatDate } from './assets/app.js';
+
+const $ = (id) => document.getElementById(id);
+
+async function loadPlugins() {
+  try {
+    const plugins = await api('/plugins');
+    const body = $('plugins-body');
+    $('count').textContent = `${plugins.length} ${plugins.length === 1 ? 'file' : 'files'}`;
+
+    if (plugins.length === 0) {
+      body.innerHTML = `<tr><td class="empty" colspan="5">no plugins uploaded yet</td></tr>`;
+      return;
+    }
+
+    body.innerHTML = plugins.map(p => `
+      <tr data-id="${p.id}">
+        <td class="name">${escapeHtml(p.name)}</td>
+        <td>${escapeHtml(p.version || '—')}</td>
+        <td>${formatBytes(p.size_bytes)}</td>
+        <td>${formatDate(p.uploaded_at)}</td>
+        <td class="row-actions">
+          <a href="${API}/plugins/${p.id}/download">download</a>
+          <button class="danger" data-delete="${p.id}">delete</button>
+        </td>
+      </tr>
+    `).join('');
+
+    body.querySelectorAll('[data-delete]').forEach(btn => {
+      btn.addEventListener('click', () => deletePlugin(btn.dataset.delete));
+    });
+  } catch (err) {
+    $('plugins-body').innerHTML = `<tr><td class="empty" colspan="5">error: ${err.message}</td></tr>`;
+  }
+}
+
+async function uploadPlugin() {
+  const file = $('f-file').files[0];
+  if (!file) {
+    setStatus('select a file first', 'err');
+    return;
+  }
+
+  const fd = new FormData();
+  fd.append('file', file);
+  fd.append('name', $('f-name').value);
+  fd.append('version', $('f-version').value);
+  fd.append('notes', $('f-notes').value);
+
+  setStatus('uploading...', '');
+  $('upload-btn').disabled = true;
+
+  try {
+    await api('/plugins', { method: 'POST', body: fd });
+    setStatus('uploaded', 'ok');
+    $('f-file').value = '';
+    $('f-name').value = '';
+    $('f-version').value = '';
+    $('f-notes').value = '';
+    loadPlugins();
+  } catch (err) {
+    setStatus(`error: ${err.message}`, 'err');
+  } finally {
+    $('upload-btn').disabled = false;
+  }
+}
+
+async function deletePlugin(id) {
+  if (!confirm('delete this plugin?')) return;
+  try {
+    await api(`/plugins/${id}`, { method: 'DELETE' });
+    loadPlugins();
+  } catch (err) {
+    alert(`delete failed: ${err.message}`);
+  }
+}
+
+function setStatus(text, kind) {
+  const el = $('upload-status');
+  el.textContent = text;
+  el.className = 'count ' + (kind || '');
+}
+
+function escapeHtml(s) {
+  if (s == null) return '';
+  return String(s).replace(/[&<>"']/g, c => ({
+    '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;'
+  }[c]));
+}
+
+$('upload-btn').addEventListener('click', uploadPlugin);
+loadPlugins();
+</script>
+
+</body>
+</html>
