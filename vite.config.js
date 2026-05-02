@@ -15,6 +15,7 @@ export default defineConfig({
         plugins: resolve(root, 'plugins.html'),
         configs: resolve(root, 'configs.html'),
         config: resolve(root, 'config.html'),
+        reference: resolve(root, 'reference.html'),
       },
     },
   },

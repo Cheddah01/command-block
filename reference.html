@@ -1,0 +1,431 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>reference / cozy-crafters/ops</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@300;400;500;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="assets/styles.css">
+</head>
+<body>
+
+<div class="layout">
+
+  <!-- ============ SIDEBAR ============ -->
+  <aside>
+    <div class="brand">
+      <span class="dot"></span>
+      <h1>cozy-crafters<span class="ver">/ops</span></h1>
+    </div>
+
+    <div class="meta">
+      <div class="row"><span>build</span><span>paper 1.21</span></div>
+      <div class="row"><span>season</span><span>02</span></div>
+      <div class="row live"><span>status</span><span>online</span></div>
+    </div>
+
+    <nav>
+      <div class="group">
+        <h2>pages/</h2>
+        <ul>
+          <li><a href="index.html">index</a></li>
+          <li><a href="plugins.html">plugins</a></li>
+          <li><a href="configs.html">configs</a></li>
+          <li><a href="reference.html" class="active">reference</a></li>
+        </ul>
+      </div>
+
+      <div class="group">
+        <h2>core/</h2>
+        <ul>
+          <li><a href="#luckperms">luckperms</a></li>
+          <li><a href="#vault">vault</a></li>
+          <li><a href="#essentialsx">essentialsx</a></li>
+          <li><a href="#placeholderapi">placeholderapi</a></li>
+        </ul>
+      </div>
+
+      <div class="group">
+        <h2>world/</h2>
+        <ul>
+          <li><a href="#griefprevention">griefprevention</a></li>
+          <li><a href="#coreprotect">coreprotect</a></li>
+          <li><a href="#litebans">litebans</a></li>
+          <li><a href="#multiverse">multiverse-core</a></li>
+          <li><a href="#plotsquared">plotsquared</a></li>
+        </ul>
+      </div>
+
+      <div class="group">
+        <h2>ui/</h2>
+        <ul>
+          <li><a href="#deluxemenus">deluxemenus</a></li>
+          <li><a href="#deluxetags">deluxetags</a></li>
+          <li><a href="#hdb">headdatabase</a></li>
+        </ul>
+      </div>
+
+      <div class="group">
+        <h2>economy/</h2>
+        <ul>
+          <li><a href="#shopgui">shopgui+</a></li>
+          <li><a href="#dtltraders">dtltraders</a></li>
+          <li><a href="#phoenixcrates">phoenixcrates</a></li>
+          <li><a href="#crazyvouchers">crazyvouchers</a></li>
+        </ul>
+      </div>
+
+      <div class="group">
+        <h2>artillex/</h2>
+        <ul>
+          <li><a href="#axrewards">axrewards</a></li>
+          <li><a href="#axrankmenu">axrankmenu</a></li>
+          <li><a href="#axquestboard">axquestboard</a></li>
+          <li><a href="#axdarkauctions">axdarkauctions</a></li>
+          <li><a href="#axboosters">axboosters</a></li>
+          <li><a href="#axkills">axkills</a></li>
+        </ul>
+      </div>
+
+      <div class="group">
+        <h2>misc/</h2>
+        <ul>
+          <li><a href="#citizens">citizens2</a></li>
+          <li><a href="#auraskills">auraskills</a></li>
+          <li><a href="#chatmanager">chatmanager</a></li>
+          <li><a href="#playtime">playtime</a></li>
+          <li><a href="#lottery">lottery</a></li>
+        </ul>
+      </div>
+    </nav>
+  </aside>
+
+  <!-- ============ MAIN ============ -->
+  <main>
+
+    <div class="crumb">
+      ~<span class="sep">/</span>ops<span class="sep">/</span>reference
+    </div>
+
+    <div class="doc-head">
+      <div class="kicker">internal · admin reference</div>
+      <h1>plugin reference <span class="dim">// cozy crafters smp</span></h1>
+      <p>single-page reference for every plugin running on the server. docs, configs, quick notes. not for public consumption.</p>
+    </div>
+
+    <!-- INFRA -->
+    <section>
+      <div class="sec-head">
+        <h2><span class="num">[00]</span>infrastructure</h2>
+        <span class="count">2 records</span>
+      </div>
+      <div class="infra">
+        <div class="col">
+          <div class="label">host</div>
+          <div class="kv"><span>provider</span><span>rawpower</span></div>
+          <div class="kv"><span>panel</span><span>pterodactyl</span></div>
+          <div class="kv"><span>build</span><span>paper 1.21</span></div>
+        </div>
+        <div class="col">
+          <div class="label">database</div>
+          <div class="kv"><span>host</span><span>us-mysql-01</span></div>
+          <div class="kv"><span>db</span><span>s17400_CoreProtect</span></div>
+          <div class="kv"><span>client</span><span>heidisql</span></div>
+        </div>
+      </div>
+    </section>
+
+    <!-- CORE -->
+    <section id="core">
+      <div class="sec-head">
+        <h2><span class="num">[01]</span>core</h2>
+        <span class="count">4 plugins</span>
+      </div>
+      <table class="plugins">
+        <thead>
+          <tr><th style="width:22%">plugin</th><th style="width:34%">role</th><th>docs</th></tr>
+        </thead>
+        <tbody>
+          <tr id="luckperms">
+            <td class="name"><a href="https://luckperms.net/wiki" target="_blank">luckperms</a></td>
+            <td class="role">permissions, ranks, prefixes</td>
+            <td class="links">
+              <a href="https://luckperms.net/wiki/Configuration" target="_blank">config</a>
+              <a href="https://luckperms.net/wiki/Command-Usage" target="_blank">commands</a>
+              <a href="https://luckperms.net/wiki/Prefixes,-Suffixes-&-Meta" target="_blank">meta</a>
+            </td>
+          </tr>
+          <tr id="vault">
+            <td class="name"><a href="https://www.spigotmc.org/resources/vault.34315/" target="_blank">vault</a></td>
+            <td class="role">economy bridge</td>
+            <td class="links"><a href="https://github.com/MilkBowl/VaultAPI" target="_blank">api</a></td>
+          </tr>
+          <tr id="essentialsx">
+            <td class="name"><a href="https://essentialsx.net/wiki/introduction.html" target="_blank">essentialsx</a></td>
+            <td class="role">core utilities, /home /tpa /etc</td>
+            <td class="links">
+              <a href="https://essentialsx.net/wiki/Module-Breakdown.html" target="_blank">modules</a>
+              <a href="https://essinfo.xeya.me/" target="_blank">essinfo</a>
+            </td>
+          </tr>
+          <tr id="placeholderapi">
+            <td class="name"><a href="https://wiki.placeholderapi.com/" target="_blank">placeholderapi</a></td>
+            <td class="role">placeholder bridge</td>
+            <td class="links">
+              <a href="https://wiki.placeholderapi.com/users/placeholder-list/" target="_blank">list</a>
+              <a href="https://github.com/PlaceholderAPI/PlaceholderAPI" target="_blank">github</a>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </section>
+
+    <!-- WORLD -->
+    <section id="world">
+      <div class="sec-head">
+        <h2><span class="num">[02]</span>world &amp; moderation</h2>
+        <span class="count">5 plugins</span>
+      </div>
+      <table class="plugins">
+        <thead><tr><th style="width:22%">plugin</th><th style="width:34%">role</th><th>docs</th></tr></thead>
+        <tbody>
+          <tr id="griefprevention">
+            <td class="name"><a href="https://docs.griefprevention.com/" target="_blank">griefprevention</a></td>
+            <td class="role">claims, protection</td>
+            <td class="links">
+              <a href="https://legacy.griefprevention.com/" target="_blank">v16</a>
+              <a href="https://github.com/GriefPrevention/GriefPrevention" target="_blank">github</a>
+            </td>
+          </tr>
+          <tr id="coreprotect">
+            <td class="name"><a href="https://docs.coreprotect.net/" target="_blank">coreprotect</a></td>
+            <td class="role">block logging, rollback</td>
+            <td class="links">
+              <a href="https://docs.coreprotect.net/commands/" target="_blank">commands</a>
+              <a href="https://docs.coreprotect.net/config/" target="_blank">config</a>
+            </td>
+          </tr>
+          <tr id="litebans">
+            <td class="name"><a href="https://www.spigotmc.org/resources/litebans.3715/" target="_blank">litebans</a></td>
+            <td class="role">bans, mutes, history</td>
+            <td class="links"><a href="https://docs.bloom.host/multiplatform/litebans/" target="_blank">mirror</a></td>
+          </tr>
+          <tr id="multiverse">
+            <td class="name"><a href="https://mvplugins.org/" target="_blank">multiverse-core</a></td>
+            <td class="role">multi-world management</td>
+            <td class="links">
+              <a href="https://github.com/Multiverse/Multiverse-Core/wiki" target="_blank">wiki</a>
+              <a href="https://hangar.papermc.io/Multiverse/Multiverse-Core" target="_blank">hangar</a>
+            </td>
+          </tr>
+          <tr id="plotsquared">
+            <td class="name"><a href="https://intellectualsites.gitbook.io/plotsquared/" target="_blank">plotsquared</a></td>
+            <td class="role">plot worlds</td>
+            <td class="links">
+              <a href="https://intellectualsites.gitbook.io/plotsquared/features/commands" target="_blank">commands</a>
+              <a href="https://github.com/IntellectualSites/PlotSquared" target="_blank">github</a>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </section>
+
+    <!-- UI -->
+    <section id="ui">
+      <div class="sec-head">
+        <h2><span class="num">[03]</span>menus &amp; ui</h2>
+        <span class="count">3 plugins</span>
+      </div>
+      <table class="plugins">
+        <thead><tr><th style="width:22%">plugin</th><th style="width:34%">role</th><th>docs</th></tr></thead>
+        <tbody>
+          <tr id="deluxemenus">
+            <td class="name"><a href="https://wiki.helpch.at/helpchat-plugins/deluxemenus" target="_blank">deluxemenus</a></td>
+            <td class="role">custom gui menus</td>
+            <td class="links">
+              <a href="https://github.com/HelpChat/DeluxeMenus-Wiki" target="_blank">legacy</a>
+              <a href="https://www.spigotmc.org/resources/deluxemenus.11734/" target="_blank">spigot</a>
+            </td>
+          </tr>
+          <tr id="deluxetags">
+            <td class="name"><a href="https://wiki.helpch.at/helpchat-plugins/deluxetags" target="_blank">deluxetags</a></td>
+            <td class="role">chat tags</td>
+            <td class="links"><a href="https://www.spigotmc.org/resources/deluxetags.4390/" target="_blank">spigot</a></td>
+          </tr>
+          <tr id="hdb">
+            <td class="name"><a href="https://www.spigotmc.org/resources/head-database.14280/" target="_blank">headdatabase</a></td>
+            <td class="role">player heads</td>
+            <td class="links"><a href="https://github.com/Arcaniax-Development/HeadDatabase-API" target="_blank">api</a></td>
+          </tr>
+        </tbody>
+      </table>
+    </section>
+
+    <!-- ECONOMY -->
+    <section id="economy">
+      <div class="sec-head">
+        <h2><span class="num">[04]</span>shops, crates &amp; rewards</h2>
+        <span class="count">4 plugins</span>
+      </div>
+      <table class="plugins">
+        <thead><tr><th style="width:22%">plugin</th><th style="width:34%">role</th><th>docs</th></tr></thead>
+        <tbody>
+          <tr id="shopgui">
+            <td class="name"><a href="https://docs.brcdev.net/" target="_blank">shopgui+</a></td>
+            <td class="role">main server shop</td>
+            <td class="links"><a href="https://github.com/brcdev-minecraft/shopgui-api" target="_blank">api</a></td>
+          </tr>
+          <tr id="dtltraders">
+            <td class="name"><a href="https://www.spigotmc.org/resources/dtltraders.35890/" target="_blank">dtltraders</a></td>
+            <td class="role">black market (rotating)</td>
+            <td class="links">
+              <a href="https://wiki.citizensnpcs.co/DtlTraders" target="_blank">wiki*</a>
+              <a href="https://wiki.citizensnpcs.co/DtlTraders/basics" target="_blank">basics</a>
+            </td>
+          </tr>
+          <tr id="phoenixcrates">
+            <td class="name"><a href="https://www.phoenixplugins.com/docs/phoenix-crates" target="_blank">phoenixcrates</a></td>
+            <td class="role">crate keys / rewards</td>
+            <td class="links">
+              <a href="https://wiki.myphoenixstore.com/" target="_blank">wiki</a>
+              <a href="https://github.com/Phoenix-Plugins/phoenix-crates-wiki" target="_blank">src</a>
+            </td>
+          </tr>
+          <tr id="crazyvouchers">
+            <td class="name"><a href="https://docs.crazycrew.us/docs/category/crazyvouchers" target="_blank">crazyvouchers</a></td>
+            <td class="role">redeemable vouchers</td>
+            <td class="links">
+              <a href="https://docs.crazycrew.us/docs/plugins/crazyvouchers/" target="_blank">start</a>
+              <a href="https://github.com/Crazy-Crew/CrazyVouchers" target="_blank">github</a>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </section>
+
+    <!-- ARTILLEX -->
+    <section id="artillex">
+      <div class="sec-head">
+        <h2><span class="num">[05]</span>artillex suite</h2>
+        <span class="count">6 plugins</span>
+      </div>
+      <table class="plugins">
+        <thead><tr><th style="width:22%">plugin</th><th style="width:34%">role</th><th>docs</th></tr></thead>
+        <tbody>
+          <tr id="axrewards">
+            <td class="name"><a href="https://docs.artillex-studios.com/axrewards.html" target="_blank">axrewards</a></td>
+            <td class="role">vote/daily reward tiers</td>
+            <td class="links"><a href="https://github.com/Artillex-Studios/AxRewards" target="_blank">github</a></td>
+          </tr>
+          <tr id="axrankmenu">
+            <td class="name"><a href="https://hangar.papermc.io/Artillex-Studios/AxRankMenu" target="_blank">axrankmenu</a></td>
+            <td class="role">rank ladder gui</td>
+            <td class="links"><a href="https://github.com/Artillex-Studios/AxRankMenu" target="_blank">github</a></td>
+          </tr>
+          <tr id="axquestboard">
+            <td class="name"><a href="https://docs.artillex-studios.com/axquestboard.html" target="_blank">axquestboard</a></td>
+            <td class="role">quests / objectives</td>
+            <td class="links">
+              <a href="https://docs.artillex-studios.com/axquestboard-configuration.html" target="_blank">config</a>
+              <a href="https://docs.artillex-studios.com/axquestboard-placeholders.html" target="_blank">papi</a>
+            </td>
+          </tr>
+          <tr id="axdarkauctions">
+            <td class="name"><a href="https://docs.artillex-studios.com/axdarkauctions.html" target="_blank">axdarkauctions</a></td>
+            <td class="role">auction house + tax</td>
+            <td class="links"></td>
+          </tr>
+          <tr id="axboosters">
+            <td class="name"><a href="https://docs.artillex-studios.com/axboosters.html" target="_blank">axboosters</a></td>
+            <td class="role">xp / drop boosters</td>
+            <td class="links">
+              <a href="https://docs.artillex-studios.com/axboosters-types.html" target="_blank">types</a>
+              <a href="https://docs.artillex-studios.com/axboosters-commands.html" target="_blank">commands</a>
+            </td>
+          </tr>
+          <tr id="axkills">
+            <td class="name"><a href="https://docs.artillex-studios.com/" target="_blank">axkills</a></td>
+            <td class="role">kill tracking / leaderboards</td>
+            <td class="links"></td>
+          </tr>
+        </tbody>
+      </table>
+    </section>
+
+    <!-- MISC -->
+    <section id="misc">
+      <div class="sec-head">
+        <h2><span class="num">[06]</span>misc</h2>
+        <span class="count">5 plugins</span>
+      </div>
+      <table class="plugins">
+        <thead><tr><th style="width:22%">plugin</th><th style="width:34%">role</th><th>docs</th></tr></thead>
+        <tbody>
+          <tr id="citizens">
+            <td class="name"><a href="https://wiki.citizensnpcs.co/" target="_blank">citizens2</a></td>
+            <td class="role">npcs</td>
+            <td class="links">
+              <a href="https://wiki.citizensnpcs.co/Commands" target="_blank">commands</a>
+              <a href="https://github.com/CitizensDev/Citizens2" target="_blank">github</a>
+            </td>
+          </tr>
+          <tr id="auraskills">
+            <td class="name"><a href="https://wiki.aurelium.dev/auraskills/" target="_blank">auraskills</a></td>
+            <td class="role">rpg skills</td>
+            <td class="links">
+              <a href="https://wiki.aurelium.dev/auraskills/skills/" target="_blank">skills</a>
+              <a href="https://github.com/Archy-X/AuraSkills" target="_blank">github</a>
+            </td>
+          </tr>
+          <tr id="chatmanager">
+            <td class="name"><a href="https://github.com/Crazy-Crew/ChatManager" target="_blank">chatmanager</a></td>
+            <td class="role">chat formatting / join msg</td>
+            <td class="links"><a href="https://github.com/Crazy-Crew/ChatManager/issues" target="_blank">issues</a></td>
+          </tr>
+          <tr id="playtime">
+            <td class="name"><a href="https://www.spigotmc.org/resources/playtime.120015/" target="_blank">playtime</a></td>
+            <td class="role">playtime + milestones</td>
+            <td class="links"></td>
+          </tr>
+          <tr id="lottery">
+            <td class="name"><a href="https://www.spigotmc.org/resources/lottery.22137/" target="_blank">lottery</a></td>
+            <td class="role">weekly lottery</td>
+            <td class="links"><a href="https://www.spigotmc.org/resources/lottery.22137/updates" target="_blank">updates</a></td>
+          </tr>
+        </tbody>
+      </table>
+    </section>
+
+    <!-- NOTES -->
+    <section id="notes">
+      <div class="sec-head">
+        <h2><span class="num">[07]</span>operator notes</h2>
+        <span class="count">scratchpad</span>
+      </div>
+      <div class="notes">
+        <div class="line comment"><span class="hash">#</span>config discipline</div>
+        <div class="line">never reformat existing yaml. targeted edits only.</div>
+        <div class="line">hex colors: <code>&amp;#RRGGBB</code> · named: <code>&amp;7 &amp;f &amp;c</code> · no hybrids.</div>
+        <div class="line">broadcast hex (per-char): <code>#</code> not <code>&amp;#</code></div>
+
+        <div class="line comment"><span class="hash">#</span>known quirks</div>
+        <div class="line">dtltraders display/lore positioning bug — unresolved.</div>
+        <div class="line">crazyvouchers: use <code>items:</code>, avoid <code>random-commands:</code></div>
+
+        <div class="line comment"><span class="hash">#</span>branding (in-game only)</div>
+        <div class="line">pink: <code>&amp;#FFAAD4</code> · decorator: <code>✦</code></div>
+      </div>
+    </section>
+
+    <footer>
+      <span>cozy-crafters/ops · season 02</span>
+      <span>last edit · pending</span>
+    </footer>
+
+  </main>
+</div>
+
+</body>
+</html>

@@ -493,6 +493,45 @@ table.plugins td.empty {
   border: 1px solid var(--rule);
 }
 
+/* ---------- ACTION CARDS (homepage) ---------- */
+.actions {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 8px;
+}
+.actions .card {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  padding: 14px 16px;
+  border: 1px solid var(--rule-2);
+  color: var(--ink);
+  text-decoration: none;
+}
+.actions .card:hover {
+  background: var(--hover);
+  border-color: var(--ink);
+  text-decoration: none;
+}
+.actions .card-label {
+  font-size: 12px;
+  font-weight: 500;
+}
+.actions .card-desc {
+  color: var(--mute);
+  font-size: 11px;
+  margin-top: 2px;
+}
+.actions .card-arrow {
+  color: var(--mute-2);
+  font-size: 14px;
+  transition: transform 120ms ease;
+}
+.actions .card:hover .card-arrow {
+  transform: translateX(2px);
+}
+
 /* ---------- FOOTER ---------- */
 footer {
   margin-top: 60px;
@@ -513,4 +552,5 @@ footer {
   .infra .col + .col { border-left: none; border-top: 1px solid var(--rule); padding-left: 0; padding-top: 12px; }
   .form-row { grid-template-columns: 1fr; gap: 2px; }
   .editor-wrap { grid-template-columns: 1fr; }
+  .actions { grid-template-columns: 1fr; }
 }
