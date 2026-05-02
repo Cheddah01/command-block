@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>published / cozy-crafters/ops</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@300;400;500;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../assets/styles.css">
+</head>
+<body>
+
+<div class="layout">
+
+  <aside>
+    <div class="brand">
+      <span class="dot"></span>
+      <h1>cozy-crafters<span class="ver">/ops</span></h1>
+    </div>
+
+    <div class="meta">
+      <div class="row"><span>build</span><span>paper 1.21</span></div>
+      <div class="row"><span>season</span><span>02</span></div>
+      <div class="row live"><span>status</span><span>online</span></div>
+    </div>
+
+    <nav>
+      <div class="group">
+        <h2>ops/</h2>
+        <ul>
+          <li><a href="index.html">index</a></li>
+          <li><a href="plugins.html">plugins</a></li>
+          <li><a href="configs.html">configs</a></li>
+          <li><a href="published.html" class="active">published</a></li>
+          <li><a href="reference.html">reference</a></li>
+        </ul>
+      </div>
+    </nav>
+  </aside>
+
+  <main>
+
+    <div class="crumb">
+      ~<span class="sep">/</span>ops<span class="sep">/</span>published
+    </div>
+
+    <div class="doc-head">
+      <div class="kicker">internal · published catalog</div>
+      <h1>published <span class="dim">// public catalog</span></h1>
+      <p>manage public plugin entries. each entry has versioned releases shown on the public site.</p>
+    </div>
+
+    <!-- CREATE -->
+    <section id="create">
+      <div class="sec-head">
+        <h2><span class="num">[01]</span>create new plugin</h2>
+        <span class="count" id="create-status">ready</span>
+      </div>
+      <div class="form">
+        <div class="form-row">
+          <label for="f-slug">slug</label>
+          <input type="text" id="f-slug" placeholder="lowercase-with-hyphens" autocomplete="off">
+        </div>
+        <div class="form-row">
+          <label for="f-name">name</label>
+          <input type="text" id="f-name" placeholder="display name" autocomplete="off">
+        </div>
+        <div class="form-row">
+          <label for="f-tagline">tagline</label>
+          <input type="text" id="f-tagline" placeholder="one-line summary" autocomplete="off">
+        </div>
+        <div class="form-row">
+          <label for="f-description">description</label>
+          <textarea id="f-description" class="tall" placeholder="markdown. rendered on public site."></textarea>
+        </div>
+        <div class="form-row">
+          <label for="f-mc-versions">mc versions</label>
+          <input type="text" id="f-mc-versions" placeholder="e.g. 1.20, 1.21" autocomplete="off">
+        </div>
+        <div class="form-row">
+          <label for="f-source-url">source url</label>
+          <input type="text" id="f-source-url" placeholder="https://github.com/..." autocomplete="off">
+        </div>
+        <div class="form-row">
+          <label for="f-support-url">support url</label>
+          <input type="text" id="f-support-url" placeholder="https://discord.gg/..." autocomplete="off">
+        </div>
+        <div class="form-actions">
+          <button class="btn primary" id="create-btn">create</button>
+        </div>
+      </div>
+    </section>
+
+    <!-- LIST -->
+    <section>
+      <div class="sec-head">
+        <h2><span class="num">[02]</span>published</h2>
+        <span class="count" id="count">—</span>
+      </div>
+      <table class="plugins" id="published-table">
+        <thead>
+          <tr>
+            <th style="width:24%">name</th>
+            <th style="width:18%">slug</th>
+            <th style="width:14%">current version</th>
+            <th style="width:12%">downloads</th>
+            <th style="width:18%">updated</th>
+            <th>actions</th>
+          </tr>
+        </thead>
+        <tbody id="published-body">
+          <tr><td class="empty" colspan="6">loading...</td></tr>
+        </tbody>
+      </table>
+    </section>
+
+    <footer>
+      <span>cozy-crafters/ops · season 02</span>
+      <span id="footer-status">—</span>
+    </footer>
+
+  </main>
+</div>
+
+<script type="module" src="/src/published.js"></script>
+
+</body>
+</html>

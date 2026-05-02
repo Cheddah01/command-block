@@ -16,6 +16,8 @@ export default defineConfig({
         opsPlugins: resolve(root, 'ops/plugins.html'),
         opsConfigs: resolve(root, 'ops/configs.html'),
         opsConfig: resolve(root, 'ops/config.html'),
+        opsPublished: resolve(root, 'ops/published.html'),
+        opsPublish: resolve(root, 'ops/publish.html'),
         opsReference: resolve(root, 'ops/reference.html'),
       },
     },

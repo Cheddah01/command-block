@@ -400,6 +400,7 @@ table.plugins td.empty {
   min-height: 50px;
   resize: vertical;
 }
+.form textarea.tall { min-height: 140px; }
 .form-actions {
   display: flex;
   justify-content: flex-end;

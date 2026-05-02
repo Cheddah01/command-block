@@ -1,0 +1,152 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>publish / cozy-crafters/ops</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@300;400;500;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../assets/styles.css">
+</head>
+<body>
+
+<div class="layout">
+
+  <aside>
+    <div class="brand">
+      <span class="dot"></span>
+      <h1>cozy-crafters<span class="ver">/ops</span></h1>
+    </div>
+
+    <div class="meta">
+      <div class="row"><span>build</span><span>paper 1.21</span></div>
+      <div class="row"><span>season</span><span>02</span></div>
+      <div class="row live"><span>status</span><span>online</span></div>
+    </div>
+
+    <nav>
+      <div class="group">
+        <h2>ops/</h2>
+        <ul>
+          <li><a href="index.html">index</a></li>
+          <li><a href="plugins.html">plugins</a></li>
+          <li><a href="configs.html">configs</a></li>
+          <li><a href="published.html" class="active">published</a></li>
+          <li><a href="reference.html">reference</a></li>
+        </ul>
+      </div>
+    </nav>
+  </aside>
+
+  <main>
+
+    <div class="crumb">
+      ~<span class="sep">/</span>ops<span class="sep">/</span><a href="published.html">published</a><span class="sep">/</span><span id="crumb-slug">…</span>
+    </div>
+
+    <div class="doc-head">
+      <div class="kicker" id="header-meta">internal · plugin editor</div>
+      <h1 id="header-title">loading…</h1>
+    </div>
+
+    <!-- METADATA -->
+    <section id="metadata">
+      <div class="sec-head">
+        <h2><span class="num">[01]</span>metadata</h2>
+        <span class="count" id="meta-status">ready</span>
+      </div>
+      <div class="form">
+        <div class="form-row">
+          <label for="f-name">name</label>
+          <input type="text" id="f-name" autocomplete="off">
+        </div>
+        <div class="form-row">
+          <label for="f-tagline">tagline</label>
+          <input type="text" id="f-tagline" autocomplete="off">
+        </div>
+        <div class="form-row">
+          <label for="f-description">description</label>
+          <textarea id="f-description" class="tall" placeholder="markdown. rendered on public site."></textarea>
+        </div>
+        <div class="form-row">
+          <label for="f-mc-versions">mc versions</label>
+          <input type="text" id="f-mc-versions" placeholder="e.g. 1.20, 1.21" autocomplete="off">
+        </div>
+        <div class="form-row">
+          <label for="f-source-url">source url</label>
+          <input type="text" id="f-source-url" autocomplete="off">
+        </div>
+        <div class="form-row">
+          <label for="f-support-url">support url</label>
+          <input type="text" id="f-support-url" autocomplete="off">
+        </div>
+        <div class="form-actions">
+          <button class="btn primary" id="save-btn">save metadata</button>
+        </div>
+      </div>
+    </section>
+
+    <!-- VERSIONS -->
+    <section id="versions">
+      <div class="sec-head">
+        <h2><span class="num">[02]</span>versions</h2>
+        <span class="count" id="versions-count">—</span>
+      </div>
+      <table class="plugins" id="versions-table">
+        <thead>
+          <tr>
+            <th style="width:18%">version</th>
+            <th style="width:14%">mc</th>
+            <th style="width:12%">size</th>
+            <th style="width:24%">created</th>
+            <th>actions</th>
+          </tr>
+        </thead>
+        <tbody id="versions-body">
+          <tr><td class="empty" colspan="5">loading...</td></tr>
+        </tbody>
+      </table>
+    </section>
+
+    <!-- UPLOAD VERSION -->
+    <section id="upload">
+      <div class="sec-head">
+        <h2><span class="num">[03]</span>upload new version</h2>
+        <span class="count" id="upload-status">ready</span>
+      </div>
+      <div class="form">
+        <div class="form-row">
+          <label for="f-file">file</label>
+          <input type="file" id="f-file" accept=".jar">
+        </div>
+        <div class="form-row">
+          <label for="f-version">version</label>
+          <input type="text" id="f-version" placeholder="e.g. 1.4.2" autocomplete="off">
+        </div>
+        <div class="form-row">
+          <label for="f-mc-version">mc version</label>
+          <input type="text" id="f-mc-version" placeholder="e.g. 1.21" autocomplete="off">
+        </div>
+        <div class="form-row">
+          <label for="f-changelog">changelog</label>
+          <textarea id="f-changelog" class="tall" placeholder="markdown. shown on public version history."></textarea>
+        </div>
+        <div class="form-actions">
+          <button class="btn primary" id="upload-btn">upload version</button>
+        </div>
+      </div>
+    </section>
+
+    <footer>
+      <span>cozy-crafters/ops · season 02</span>
+      <span id="footer-status">—</span>
+    </footer>
+
+  </main>
+</div>
+
+<script type="module" src="/src/publish.js"></script>
+
+</body>
+</html>
