@@ -4,14 +4,20 @@
 
 :root {
   --bg: #ffffff;
+  --bg-paper: #faf7f2;
+  --bg-cool: #f6f7f9;
   --ink: #000000;
   --ink-2: #111111;
   --mute: #888888;
   --mute-2: #c4c4c4;
   --rule: #ededed;
   --rule-2: #d8d8d8;
+  --rule-warm: #ebe5d9;
   --hover: #f6f6f6;
   --live: #d63d2a;
+
+  --font-mono: 'IBM Plex Mono', ui-monospace, monospace;
+  --font-sans: 'IBM Plex Sans', system-ui, -apple-system, sans-serif;
 }
 
 * { box-sizing: border-box; margin: 0; padding: 0; }
@@ -148,6 +154,18 @@ main.wide { max-width: none; }
   margin: 0 auto;
   padding: 60px 40px 80px;
 }
+.public-page .doc-head h1 {
+  font-family: var(--font-sans);
+  font-size: 22px;
+  font-weight: 500;
+  letter-spacing: -0.01em;
+  line-height: 1.25;
+}
+.public-page .doc-head p {
+  font-family: var(--font-sans);
+  font-size: 13px;
+  line-height: 1.6;
+}
 
 .public-hero {
   text-align: center;
@@ -156,13 +174,15 @@ main.wide { max-width: none; }
   border-bottom: 1px solid var(--rule);
 }
 .public-hero .ascii-banner {
-  margin: 0 0 18px 0;
+  margin: 0 0 20px 0;
   display: inline-block;
   text-align: left;
 }
 .public-tagline {
-  font-size: 12px;
+  font-family: var(--font-sans);
+  font-size: 14px;
   color: var(--mute);
+  letter-spacing: 0.005em;
 }
 
 .public-section { margin-bottom: 48px; }
@@ -174,13 +194,14 @@ main.wide { max-width: none; }
 }
 .catalog-card {
   display: block;
-  border: 1px solid var(--rule-2);
-  padding: 14px 16px;
+  background: var(--bg-paper);
+  border: 1px solid var(--rule-warm);
+  padding: 16px 18px;
   color: var(--ink);
   text-decoration: none;
 }
 .catalog-card:hover {
-  background: var(--hover);
+  background: var(--bg);
   border-color: var(--ink);
   text-decoration: none;
 }
@@ -191,17 +212,21 @@ main.wide { max-width: none; }
   gap: 8px;
 }
 .catalog-card-name {
-  font-size: 12px;
-  font-weight: 500;
+  font-family: var(--font-sans);
+  font-size: 14px;
+  font-weight: 600;
+  letter-spacing: -0.005em;
 }
 .catalog-card-version {
   font-size: 11px;
   color: var(--mute);
 }
 .catalog-card-tagline {
+  font-family: var(--font-sans);
   color: var(--mute);
-  font-size: 11px;
+  font-size: 12px;
   margin-top: 4px;
+  line-height: 1.5;
 }
 .catalog-card-meta {
   display: flex;
@@ -251,10 +276,14 @@ main.wide { max-width: none; }
 
 /* ---------- MARKDOWN CONTENT ---------- */
 .markdown {
-  font-size: 12px;
+  font-family: var(--font-sans);
+  font-size: 13px;
   line-height: 1.7;
   color: var(--ink-2);
   max-width: 70ch;
+}
+.markdown h1, .markdown h2, .markdown h3, .markdown h4 {
+  font-family: var(--font-sans);
 }
 .markdown p { margin-bottom: 12px; }
 .markdown p:last-child { margin-bottom: 0; }
@@ -270,13 +299,14 @@ main.wide { max-width: none; }
 .markdown a { text-decoration: underline; text-underline-offset: 2px; color: var(--ink); }
 .markdown a:hover { color: var(--ink); }
 .markdown code {
-  font-family: inherit;
+  font-family: var(--font-mono);
   background: var(--hover);
   padding: 0 4px;
   border: 1px solid var(--rule);
   font-size: 11px;
 }
 .markdown pre {
+  font-family: var(--font-mono);
   background: var(--hover);
   border: 1px solid var(--rule);
   padding: 10px 12px;
