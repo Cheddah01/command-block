@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>404 / cozy-crafters/ops</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@300;400;500;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="assets/styles.css">
+</head>
+<body>
+
+<div class="layout">
+
+  <aside>
+    <div class="brand">
+      <span class="dot"></span>
+      <h1>cozy-crafters<span class="ver">/ops</span></h1>
+    </div>
+
+    <div class="meta">
+      <div class="row"><span>build</span><span>paper 1.21</span></div>
+      <div class="row"><span>season</span><span>02</span></div>
+      <div class="row live"><span>status</span><span>online</span></div>
+    </div>
+
+    <nav>
+      <div class="group">
+        <h2>pages/</h2>
+        <ul>
+          <li><a href="index.html">index</a></li>
+          <li><a href="plugins.html">plugins</a></li>
+          <li><a href="configs.html">configs</a></li>
+          <li><a href="reference.html">reference</a></li>
+        </ul>
+      </div>
+    </nav>
+  </aside>
+
+  <main>
+
+    <div class="crumb">
+      ~<span class="sep">/</span>ops<span class="sep">/</span><span id="bad-path">404</span>
+    </div>
+
+    <div class="doc-head">
+      <div class="kicker">internal · admin reference</div>
+      <h1>404 <span class="dim">// no such route</span></h1>
+      <p>that path doesn't exist on this filesystem.</p>
+    </div>
+
+    <section>
+      <div class="sec-head">
+        <h2><span class="num">[01]</span>traceback</h2>
+      </div>
+      <div class="shell-err">
+        <div class="line"><span class="err-prefix">$</span>navigate <span id="path">…</span></div>
+        <div class="line"><span class="err-fatal">fatal:</span>route does not exist on this branch</div>
+        <div class="line"><span class="err-prefix">$</span><span class="cursor"></span></div>
+      </div>
+    </section>
+
+    <section>
+      <nav>
+        <div class="group">
+          <h2>did you mean/</h2>
+          <ul>
+            <li><a href="index.html">index</a></li>
+            <li><a href="plugins.html">plugins</a></li>
+            <li><a href="configs.html">configs</a></li>
+            <li><a href="reference.html">reference</a></li>
+          </ul>
+        </div>
+      </nav>
+    </section>
+
+    <footer>
+      <span>cozy-crafters/ops · season 02</span>
+      <span>fs: read-only</span>
+    </footer>
+
+  </main>
+</div>
+
+<script>
+  const full = window.location.pathname;
+  document.getElementById('path').textContent = full;
+  const trimmed = full.replace(/^\/command-block\/?/, '').replace(/\/$/, '');
+  document.getElementById('bad-path').textContent = trimmed || '404';
+</script>
+
+</body>
+</html>

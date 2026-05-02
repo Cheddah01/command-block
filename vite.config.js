@@ -16,6 +16,7 @@ export default defineConfig({
         configs: resolve(root, 'configs.html'),
         config: resolve(root, 'config.html'),
         reference: resolve(root, 'reference.html'),
+        notfound: resolve(root, '404.html'),
       },
     },
   },

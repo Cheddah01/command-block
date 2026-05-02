@@ -142,6 +142,18 @@ main.wide { max-width: none; }
 .crumb a { color: var(--mute); }
 .crumb a:hover { color: var(--ink); }
 
+/* ---------- ASCII BANNER ---------- */
+.ascii-banner {
+  font-family: 'IBM Plex Mono', ui-monospace, monospace;
+  font-size: 11px;
+  line-height: 1;
+  color: var(--mute-2);
+  margin-bottom: 28px;
+  white-space: pre;
+  overflow: hidden;
+  user-select: none;
+}
+
 /* ---------- DOC HEADER ---------- */
 .doc-head {
   margin-bottom: 40px;
@@ -165,6 +177,33 @@ main.wide { max-width: none; }
   color: var(--mute);
   max-width: 60ch;
   font-size: 12px;
+}
+.doc-head p.tip {
+  margin-top: 8px;
+  font-style: italic;
+}
+
+/* ---------- SHELL ERROR (404) ---------- */
+.shell-err {
+  border: 1px solid var(--rule-2);
+  background: var(--bg);
+  padding: 14px 16px;
+  font-family: 'IBM Plex Mono', ui-monospace, monospace;
+  font-size: 11px;
+  color: var(--ink-2);
+  margin-bottom: 28px;
+}
+.shell-err .line {
+  padding: 1px 0;
+  white-space: pre-wrap;
+  word-break: break-all;
+}
+.shell-err .err-prefix { color: var(--mute); margin-right: 8px; }
+.shell-err .err-fatal { color: var(--live); margin-right: 6px; }
+.shell-err .cursor::before {
+  content: '█';
+  color: var(--ink);
+  animation: blink 1.6s steps(1) infinite;
 }
 
 /* ---------- SECTIONS ---------- */
@@ -577,4 +616,5 @@ footer {
   .form-row { grid-template-columns: 1fr; gap: 2px; }
   .editor-wrap { grid-template-columns: 1fr; }
   .actions { grid-template-columns: 1fr; }
+  .ascii-banner { display: none; }
 }

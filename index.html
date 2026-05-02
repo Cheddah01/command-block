@@ -46,10 +46,23 @@
       ~<span class="sep">/</span>ops<span class="sep">/</span>index
     </div>
 
+    <pre class="ascii-banner" aria-hidden="true">
+ ███   ███  █   █ █   █  ███  █   █ ████
+█   █ █   █ ██ ██ ██ ██ █   █ ██  █ █   █
+█     █   █ █ █ █ █ █ █ █████ █ █ █ █   █
+█   █ █   █ █   █ █   █ █   █ █  ██ █   █
+ ███   ███  █   █ █   █ █   █ █   █ ████
+      ████  █      ███   ███  █   █
+      █   █ █     █   █ █   █ █  █
+      ████  █     █   █ █     ███
+      █   █ █     █   █ █   █ █  █
+      ████  █████  ███   ███  █   █</pre>
+
     <div class="doc-head">
       <div class="kicker">internal · admin reference</div>
       <h1>command-block <span class="dim">// admin tool</span></h1>
       <p>pick a thing to do.</p>
+      <p class="tip" id="tip"></p>
     </div>
 
     <section>
@@ -110,6 +123,22 @@
 
   </main>
 </div>
+
+<script>
+  const tips = [
+    'configs are versioned forever. delete with care.',
+    'cmd+s saves a config version. note field is optional.',
+    'never reformat existing yaml. targeted edits only.',
+    'hex colors use &#RRGGBB. named colors use &7, &f, &c. no hybrids.',
+    'broadcast hex (per-character) uses # not &#.',
+    'crazyvouchers: items: works. random-commands: lies.',
+    'jars upload to r2. configs live in d1.',
+    'restoring a version creates a new version. nothing is ever lost.',
+    'cloudflare access cookies expire after 24h.',
+    'this site has no analytics. nobody is watching. relax.',
+  ];
+  document.getElementById('tip').textContent = '// tip: ' + tips[Math.floor(Math.random() * tips.length)];
+</script>
 
 </body>
 </html>
