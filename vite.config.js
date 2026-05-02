@@ -11,6 +11,7 @@ export default defineConfig({
     rollupOptions: {
       input: {
         main: resolve(root, 'index.html'),
+        plugin: resolve(root, 'plugin.html'),
         notfound: resolve(root, '404.html'),
         opsIndex: resolve(root, 'ops/index.html'),
         opsPlugins: resolve(root, 'ops/plugins.html'),

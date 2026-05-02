@@ -11,16 +11,36 @@
 </head>
 <body>
 
-<main class="public-home">
-  <pre class="ascii-banner" aria-hidden="true">
+<main class="public-page">
+
+  <header class="public-hero">
+    <pre class="ascii-banner" aria-hidden="true">
  ███   ███  █   █ █   █  ███  █   █ ████    ████  █      ███   ███  █   █
 █   █ █   █ ██ ██ ██ ██ █   █ ██  █ █   █   █   █ █     █   █ █   █ █  █
 █     █   █ █ █ █ █ █ █ █████ █ █ █ █   █   ████  █     █   █ █     ███
 █   █ █   █ █   █ █   █ █   █ █  ██ █   █   █   █ █     █   █ █   █ █  █
  ███   ███  █   █ █   █ █   █ █   █ ████    ████  █████  ███   ███  █   █</pre>
+    <p class="public-tagline">Minecraft plugins built for server owners, by server owners.</p>
+  </header>
 
-  <p class="public-tagline">tools for minecraft server owners.</p>
+  <section class="public-section">
+    <div class="sec-head">
+      <h2><span class="num">[01]</span>plugins</h2>
+      <span class="count" id="count">—</span>
+    </div>
+    <div class="catalog-grid" id="catalog">
+      <div class="catalog-empty">loading…</div>
+    </div>
+  </section>
+
+  <footer class="public-footer">
+    <span>command-block</span>
+    <span>built on cloudflare</span>
+  </footer>
+
 </main>
+
+<script type="module" src="/src/home.js"></script>
 
 </body>
 </html>

@@ -143,36 +143,172 @@ main.wide { max-width: none; }
 .crumb a:hover { color: var(--ink); }
 
 /* ---------- PUBLIC LANDING ---------- */
-.public-home {
-  min-height: 100vh;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-  padding: 60px 24px;
-  text-align: center;
-  max-width: none;
+.public-page {
+  max-width: 880px;
+  margin: 0 auto;
+  padding: 60px 40px 80px;
 }
-.public-home .ascii-banner {
-  margin: 0 0 28px 0;
+
+.public-hero {
+  text-align: center;
+  margin-bottom: 56px;
+  padding-bottom: 32px;
+  border-bottom: 1px solid var(--rule);
+}
+.public-hero .ascii-banner {
+  margin: 0 0 18px 0;
+  display: inline-block;
   text-align: left;
 }
 .public-tagline {
   font-size: 12px;
   color: var(--mute);
-  margin-bottom: 40px;
-}
-.public-intro {
-  font-size: 12px;
-  color: var(--ink-2);
-  max-width: 50ch;
-  line-height: 1.6;
 }
 
+.public-section { margin-bottom: 48px; }
+
+.catalog-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 8px;
+}
+.catalog-card {
+  display: block;
+  border: 1px solid var(--rule-2);
+  padding: 14px 16px;
+  color: var(--ink);
+  text-decoration: none;
+}
+.catalog-card:hover {
+  background: var(--hover);
+  border-color: var(--ink);
+  text-decoration: none;
+}
+.catalog-card-head {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 8px;
+}
+.catalog-card-name {
+  font-size: 12px;
+  font-weight: 500;
+}
+.catalog-card-version {
+  font-size: 11px;
+  color: var(--mute);
+}
+.catalog-card-tagline {
+  color: var(--mute);
+  font-size: 11px;
+  margin-top: 4px;
+}
+.catalog-card-meta {
+  display: flex;
+  gap: 14px;
+  font-size: 11px;
+  color: var(--mute-2);
+  margin-top: 10px;
+}
+.catalog-empty {
+  color: var(--mute);
+  font-style: italic;
+  padding: 12px 0;
+  font-size: 11px;
+}
+
+/* ---------- PLUGIN DETAIL PAGE ---------- */
+.download-row {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 8px 0;
+}
+.link-list {
+  border-top: 1px solid var(--rule-2);
+  border-bottom: 1px solid var(--rule);
+  padding: 12px 0;
+  font-size: 12px;
+}
+.link-list a:hover { text-decoration: underline; text-underline-offset: 2px; }
+.link-list .link-sep { color: var(--mute-2); padding: 0 12px; }
+
+.btn-link {
+  font-family: inherit;
+  font-size: 11px;
+  background: none;
+  border: none;
+  color: var(--mute);
+  cursor: pointer;
+  padding: 0;
+  margin-right: 12px;
+  text-decoration: underline;
+  text-underline-offset: 2px;
+}
+.btn-link:hover { color: var(--ink); }
+.changelog-row td { background: var(--hover); }
+.changelog-body { padding: 12px 0; max-width: 70ch; }
+
+/* ---------- MARKDOWN CONTENT ---------- */
+.markdown {
+  font-size: 12px;
+  line-height: 1.7;
+  color: var(--ink-2);
+  max-width: 70ch;
+}
+.markdown p { margin-bottom: 12px; }
+.markdown p:last-child { margin-bottom: 0; }
+.markdown h1, .markdown h2, .markdown h3, .markdown h4 {
+  font-weight: 500;
+  margin: 18px 0 8px;
+}
+.markdown h1 { font-size: 14px; }
+.markdown h2 { font-size: 13px; }
+.markdown h3, .markdown h4 { font-size: 12px; }
+.markdown ul, .markdown ol { margin: 8px 0 12px 18px; }
+.markdown li { margin-bottom: 4px; }
+.markdown a { text-decoration: underline; text-underline-offset: 2px; color: var(--ink); }
+.markdown a:hover { color: var(--ink); }
+.markdown code {
+  font-family: inherit;
+  background: var(--hover);
+  padding: 0 4px;
+  border: 1px solid var(--rule);
+  font-size: 11px;
+}
+.markdown pre {
+  background: var(--hover);
+  border: 1px solid var(--rule);
+  padding: 10px 12px;
+  margin: 8px 0 12px;
+  overflow-x: auto;
+  font-size: 11px;
+}
+.markdown pre code { background: transparent; border: none; padding: 0; }
+.markdown blockquote {
+  border-left: 2px solid var(--rule-2);
+  padding-left: 12px;
+  color: var(--mute);
+  margin: 8px 0 12px;
+}
+.markdown hr { border: none; border-top: 1px solid var(--rule); margin: 16px 0; }
+
+.public-footer {
+  margin-top: 60px;
+  padding-top: 16px;
+  border-top: 1px solid var(--rule);
+  font-size: 11px;
+  color: var(--mute);
+  display: flex;
+  justify-content: space-between;
+}
+.public-footer a:hover { color: var(--ink); }
+
 @media (max-width: 800px) {
-  .public-home { padding: 40px 20px; }
-  .public-home .ascii-banner { display: none; }
-  .public-tagline { margin-bottom: 24px; }
+  .public-page { padding: 32px 20px 60px; }
+  .public-hero .ascii-banner { display: none; }
+  .public-hero { margin-bottom: 32px; }
+  .catalog-grid { grid-template-columns: 1fr; }
 }
 
 /* ---------- ASCII BANNER ---------- */
