@@ -1,0 +1,711 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>cozy-crafters // ops</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:ital,wght@0,300;0,400;0,500;0,600;1,400&family=IBM+Plex+Serif:wght@400;500&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg: #fafaf7;
+    --ink: #0a0a0a;
+    --ink-2: #1a1a1a;
+    --mute: #6a6a6a;
+    --mute-2: #9a9a9a;
+    --rule: #e4e4df;
+    --rule-2: #d0d0c8;
+    --accent: #c8412c; /* a single warm accent — sparingly */
+    --hl: #fff5b8;
+  }
+
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+
+  html, body {
+    background: var(--bg);
+    color: var(--ink);
+    font-family: 'IBM Plex Mono', ui-monospace, monospace;
+    font-size: 13px;
+    line-height: 1.55;
+    font-feature-settings: 'ss01' on, 'zero' on;
+    -webkit-font-smoothing: antialiased;
+  }
+
+  /* faint paper grain */
+  body::before {
+    content: '';
+    position: fixed; inset: 0;
+    background-image:
+      radial-gradient(circle at 1px 1px, rgba(0,0,0,0.025) 1px, transparent 0);
+    background-size: 4px 4px;
+    pointer-events: none;
+    z-index: 0;
+  }
+
+  a { color: inherit; text-decoration: none; }
+  a:hover { text-decoration: underline; text-underline-offset: 3px; }
+
+  .layout {
+    display: grid;
+    grid-template-columns: 280px 1fr;
+    min-height: 100vh;
+    position: relative;
+    z-index: 1;
+  }
+
+  /* ---------- SIDEBAR ---------- */
+  aside {
+    border-right: 1px solid var(--rule);
+    padding: 28px 24px;
+    position: sticky;
+    top: 0;
+    height: 100vh;
+    overflow-y: auto;
+    background: var(--bg);
+  }
+
+  .brand {
+    display: flex;
+    align-items: baseline;
+    gap: 8px;
+    margin-bottom: 4px;
+  }
+  .brand .dot {
+    width: 7px; height: 7px;
+    background: var(--accent);
+    border-radius: 50%;
+    display: inline-block;
+    transform: translateY(-1px);
+    animation: pulse 2.4s ease-in-out infinite;
+  }
+  @keyframes pulse {
+    0%, 100% { opacity: 1; }
+    50% { opacity: 0.35; }
+  }
+  .brand h1 {
+    font-size: 13px;
+    font-weight: 600;
+    letter-spacing: -0.01em;
+  }
+  .brand .ver {
+    font-size: 11px;
+    color: var(--mute);
+  }
+
+  .meta {
+    font-size: 11px;
+    color: var(--mute);
+    margin-bottom: 32px;
+    padding-bottom: 16px;
+    border-bottom: 1px solid var(--rule);
+  }
+  .meta .row { display: flex; justify-content: space-between; padding: 2px 0; }
+  .meta .row span:last-child { color: var(--ink-2); }
+
+  nav h2 {
+    font-size: 10px;
+    font-weight: 500;
+    text-transform: uppercase;
+    letter-spacing: 0.12em;
+    color: var(--mute);
+    margin: 24px 0 8px;
+  }
+  nav h2:first-child { margin-top: 0; }
+
+  nav ul { list-style: none; }
+  nav li a {
+    display: flex;
+    justify-content: space-between;
+    padding: 3px 0;
+    font-size: 12px;
+    color: var(--ink-2);
+  }
+  nav li a::before {
+    content: '·';
+    color: var(--mute-2);
+    margin-right: 8px;
+  }
+  nav li a:hover {
+    color: var(--accent);
+    text-decoration: none;
+  }
+  nav li a .tag {
+    color: var(--mute-2);
+    font-size: 10px;
+  }
+
+  /* ---------- MAIN ---------- */
+  main {
+    padding: 28px 48px 80px;
+    max-width: 920px;
+  }
+
+  .breadcrumb {
+    font-size: 11px;
+    color: var(--mute);
+    margin-bottom: 32px;
+  }
+  .breadcrumb .sep { color: var(--mute-2); margin: 0 8px; }
+
+  .header {
+    margin-bottom: 48px;
+    padding-bottom: 24px;
+    border-bottom: 1px solid var(--rule);
+  }
+  .header .kicker {
+    font-size: 10px;
+    text-transform: uppercase;
+    letter-spacing: 0.18em;
+    color: var(--mute);
+    margin-bottom: 8px;
+  }
+  .header h1 {
+    font-family: 'IBM Plex Serif', Georgia, serif;
+    font-size: 38px;
+    font-weight: 400;
+    letter-spacing: -0.02em;
+    line-height: 1.1;
+    margin-bottom: 12px;
+  }
+  .header h1 em {
+    font-style: italic;
+    color: var(--mute);
+  }
+  .header p {
+    font-size: 13px;
+    color: var(--mute);
+    max-width: 560px;
+  }
+
+  /* section */
+  section { margin-bottom: 56px; }
+
+  .sec-head {
+    display: flex;
+    align-items: baseline;
+    justify-content: space-between;
+    margin-bottom: 16px;
+    padding-bottom: 6px;
+    border-bottom: 1px solid var(--rule);
+  }
+  .sec-head h2 {
+    font-size: 11px;
+    font-weight: 500;
+    text-transform: uppercase;
+    letter-spacing: 0.16em;
+  }
+  .sec-head .count {
+    font-size: 10px;
+    color: var(--mute);
+  }
+
+  /* plugin table */
+  table.plugins {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 12px;
+  }
+  table.plugins th,
+  table.plugins td {
+    text-align: left;
+    padding: 8px 12px 8px 0;
+    border-bottom: 1px dashed var(--rule);
+    vertical-align: top;
+  }
+  table.plugins th {
+    font-weight: 500;
+    color: var(--mute);
+    font-size: 10px;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    border-bottom: 1px solid var(--rule-2);
+    padding-bottom: 6px;
+  }
+  table.plugins tr:hover td { background: rgba(0,0,0,0.02); }
+  table.plugins .name { font-weight: 500; }
+  table.plugins .name a { border-bottom: 1px solid transparent; }
+  table.plugins .name a:hover {
+    color: var(--accent);
+    border-bottom-color: var(--accent);
+    text-decoration: none;
+  }
+  table.plugins .role { color: var(--mute); }
+  table.plugins .links { white-space: nowrap; }
+  table.plugins .links a {
+    color: var(--mute);
+    margin-right: 10px;
+    font-size: 11px;
+  }
+  table.plugins .links a:hover { color: var(--accent); text-decoration: none; }
+
+  /* quick-grid for infra */
+  .grid-2 {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 24px;
+  }
+  .card {
+    border: 1px solid var(--rule);
+    padding: 16px 18px;
+    background: rgba(255,255,255,0.4);
+  }
+  .card h3 {
+    font-size: 10px;
+    text-transform: uppercase;
+    letter-spacing: 0.14em;
+    color: var(--mute);
+    margin-bottom: 10px;
+    font-weight: 500;
+  }
+  .card .kv { display: flex; justify-content: space-between; padding: 3px 0; font-size: 12px; }
+  .card .kv span:first-child { color: var(--mute); }
+  .card .kv span:last-child { color: var(--ink-2); }
+
+  /* console box */
+  .console {
+    background: var(--ink);
+    color: #d4d4cc;
+    padding: 18px 20px;
+    font-size: 11.5px;
+    line-height: 1.7;
+    border-radius: 2px;
+  }
+  .console .prompt { color: #6a9955; }
+  .console .arg { color: #ce9178; }
+  .console .comment { color: #6a6a6a; font-style: italic; }
+  .console .cursor::after {
+    content: '▊';
+    color: var(--accent);
+    animation: blink 1.1s steps(1) infinite;
+  }
+  @keyframes blink { 50% { opacity: 0; } }
+
+  /* footer */
+  footer {
+    margin-top: 80px;
+    padding-top: 24px;
+    border-top: 1px solid var(--rule);
+    font-size: 11px;
+    color: var(--mute);
+    display: flex;
+    justify-content: space-between;
+  }
+
+  /* responsive */
+  @media (max-width: 800px) {
+    .layout { grid-template-columns: 1fr; }
+    aside { position: relative; height: auto; border-right: none; border-bottom: 1px solid var(--rule); }
+    main { padding: 28px 24px 60px; }
+    .grid-2 { grid-template-columns: 1fr; }
+  }
+</style>
+</head>
+<body>
+
+<div class="layout">
+
+  <!-- ============ SIDEBAR ============ -->
+  <aside>
+    <div class="brand">
+      <span class="dot"></span>
+      <h1>cozy-crafters</h1>
+      <span class="ver">/ops</span>
+    </div>
+
+    <div class="meta">
+      <div class="row"><span>build</span><span>paper 1.21</span></div>
+      <div class="row"><span>season</span><span>02</span></div>
+      <div class="row"><span>status</span><span>online</span></div>
+    </div>
+
+    <nav>
+      <h2>// core</h2>
+      <ul>
+        <li><a href="#luckperms">luckperms <span class="tag">perms</span></a></li>
+        <li><a href="#vault">vault <span class="tag">econ</span></a></li>
+        <li><a href="#essentialsx">essentialsx <span class="tag">core</span></a></li>
+        <li><a href="#placeholderapi">placeholderapi <span class="tag">api</span></a></li>
+      </ul>
+
+      <h2>// world</h2>
+      <ul>
+        <li><a href="#griefprevention">griefprevention</a></li>
+        <li><a href="#coreprotect">coreprotect</a></li>
+        <li><a href="#litebans">litebans</a></li>
+        <li><a href="#multiverse">multiverse-core</a></li>
+        <li><a href="#plotsquared">plotsquared</a></li>
+      </ul>
+
+      <h2>// ui</h2>
+      <ul>
+        <li><a href="#deluxemenus">deluxemenus</a></li>
+        <li><a href="#deluxetags">deluxetags</a></li>
+        <li><a href="#hdb">headdatabase</a></li>
+      </ul>
+
+      <h2>// economy</h2>
+      <ul>
+        <li><a href="#shopgui">shopgui+</a></li>
+        <li><a href="#dtltraders">dtltraders</a></li>
+        <li><a href="#phoenixcrates">phoenixcrates</a></li>
+        <li><a href="#crazyvouchers">crazyvouchers</a></li>
+      </ul>
+
+      <h2>// artillex</h2>
+      <ul>
+        <li><a href="#axrewards">axrewards</a></li>
+        <li><a href="#axrankmenu">axrankmenu</a></li>
+        <li><a href="#axquestboard">axquestboard</a></li>
+        <li><a href="#axdarkauctions">axdarkauctions</a></li>
+        <li><a href="#axboosters">axboosters</a></li>
+        <li><a href="#axkills">axkills</a></li>
+      </ul>
+
+      <h2>// misc</h2>
+      <ul>
+        <li><a href="#citizens">citizens2</a></li>
+        <li><a href="#auraskills">auraskills</a></li>
+        <li><a href="#chatmanager">chatmanager</a></li>
+        <li><a href="#playtime">playtime</a></li>
+        <li><a href="#lottery">lottery</a></li>
+      </ul>
+    </nav>
+  </aside>
+
+  <!-- ============ MAIN ============ -->
+  <main>
+
+    <div class="breadcrumb">
+      ~ <span class="sep">/</span> ops <span class="sep">/</span> index
+    </div>
+
+    <div class="header">
+      <div class="kicker">internal · admin reference</div>
+      <h1>Plugin &amp; config hub <em>— cozy crafters smp</em></h1>
+      <p>Single-page reference for every plugin running on the server. Docs, configs, quick notes. Not for public consumption.</p>
+    </div>
+
+    <!-- INFRA -->
+    <section>
+      <div class="sec-head">
+        <h2>00 · infrastructure</h2>
+        <span class="count">2 records</span>
+      </div>
+      <div class="grid-2">
+        <div class="card">
+          <h3>host</h3>
+          <div class="kv"><span>provider</span><span>rawpower</span></div>
+          <div class="kv"><span>panel</span><span>pterodactyl</span></div>
+          <div class="kv"><span>build</span><span>paper 1.21</span></div>
+        </div>
+        <div class="card">
+          <h3>database</h3>
+          <div class="kv"><span>host</span><span>us-mysql-01</span></div>
+          <div class="kv"><span>db</span><span>s17400_CoreProtect</span></div>
+          <div class="kv"><span>client</span><span>heidisql</span></div>
+        </div>
+      </div>
+    </section>
+
+    <!-- CORE -->
+    <section id="core">
+      <div class="sec-head">
+        <h2>01 · core</h2>
+        <span class="count">4 plugins</span>
+      </div>
+      <table class="plugins">
+        <thead>
+          <tr><th style="width:22%">plugin</th><th style="width:30%">role</th><th>docs</th></tr>
+        </thead>
+        <tbody>
+          <tr id="luckperms">
+            <td class="name"><a href="https://luckperms.net/wiki" target="_blank">luckperms</a></td>
+            <td class="role">permissions, ranks, prefixes</td>
+            <td class="links">
+              <a href="https://luckperms.net/wiki/Configuration" target="_blank">config</a>
+              <a href="https://luckperms.net/wiki/Command-Usage" target="_blank">commands</a>
+              <a href="https://luckperms.net/wiki/Prefixes,-Suffixes-&-Meta" target="_blank">meta</a>
+            </td>
+          </tr>
+          <tr id="vault">
+            <td class="name"><a href="https://www.spigotmc.org/resources/vault.34315/" target="_blank">vault</a></td>
+            <td class="role">economy bridge</td>
+            <td class="links">
+              <a href="https://github.com/MilkBowl/VaultAPI" target="_blank">api</a>
+            </td>
+          </tr>
+          <tr id="essentialsx">
+            <td class="name"><a href="https://essentialsx.net/wiki/introduction.html" target="_blank">essentialsx</a></td>
+            <td class="role">core utilities, /home /tpa /etc</td>
+            <td class="links">
+              <a href="https://essentialsx.net/wiki/Module-Breakdown.html" target="_blank">modules</a>
+              <a href="https://essinfo.xeya.me/" target="_blank">essinfo</a>
+            </td>
+          </tr>
+          <tr id="placeholderapi">
+            <td class="name"><a href="https://wiki.placeholderapi.com/" target="_blank">placeholderapi</a></td>
+            <td class="role">placeholder bridge for menus/chat</td>
+            <td class="links">
+              <a href="https://wiki.placeholderapi.com/users/placeholder-list/" target="_blank">list</a>
+              <a href="https://github.com/PlaceholderAPI/PlaceholderAPI" target="_blank">github</a>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </section>
+
+    <!-- WORLD -->
+    <section id="world">
+      <div class="sec-head">
+        <h2>02 · world &amp; moderation</h2>
+        <span class="count">5 plugins</span>
+      </div>
+      <table class="plugins">
+        <thead><tr><th style="width:22%">plugin</th><th style="width:30%">role</th><th>docs</th></tr></thead>
+        <tbody>
+          <tr id="griefprevention">
+            <td class="name"><a href="https://docs.griefprevention.com/" target="_blank">griefprevention</a></td>
+            <td class="role">claims, protection</td>
+            <td class="links">
+              <a href="https://legacy.griefprevention.com/" target="_blank">v16 legacy</a>
+              <a href="https://github.com/GriefPrevention/GriefPrevention" target="_blank">github</a>
+            </td>
+          </tr>
+          <tr id="coreprotect">
+            <td class="name"><a href="https://docs.coreprotect.net/" target="_blank">coreprotect</a></td>
+            <td class="role">block logging, rollback</td>
+            <td class="links">
+              <a href="https://docs.coreprotect.net/commands/" target="_blank">commands</a>
+              <a href="https://docs.coreprotect.net/config/" target="_blank">config</a>
+            </td>
+          </tr>
+          <tr id="litebans">
+            <td class="name"><a href="https://www.spigotmc.org/resources/litebans.3715/" target="_blank">litebans</a></td>
+            <td class="role">bans, mutes, history</td>
+            <td class="links">
+              <a href="https://docs.bloom.host/multiplatform/litebans/" target="_blank">mirror</a>
+            </td>
+          </tr>
+          <tr id="multiverse">
+            <td class="name"><a href="https://mvplugins.org/" target="_blank">multiverse-core</a></td>
+            <td class="role">multi-world management</td>
+            <td class="links">
+              <a href="https://github.com/Multiverse/Multiverse-Core/wiki" target="_blank">wiki</a>
+              <a href="https://hangar.papermc.io/Multiverse/Multiverse-Core" target="_blank">hangar</a>
+            </td>
+          </tr>
+          <tr id="plotsquared">
+            <td class="name"><a href="https://intellectualsites.gitbook.io/plotsquared/" target="_blank">plotsquared</a></td>
+            <td class="role">plot worlds (build contests)</td>
+            <td class="links">
+              <a href="https://intellectualsites.gitbook.io/plotsquared/features/commands" target="_blank">commands</a>
+              <a href="https://github.com/IntellectualSites/PlotSquared" target="_blank">github</a>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </section>
+
+    <!-- UI -->
+    <section id="ui">
+      <div class="sec-head">
+        <h2>03 · menus &amp; ui</h2>
+        <span class="count">3 plugins</span>
+      </div>
+      <table class="plugins">
+        <thead><tr><th style="width:22%">plugin</th><th style="width:30%">role</th><th>docs</th></tr></thead>
+        <tbody>
+          <tr id="deluxemenus">
+            <td class="name"><a href="https://wiki.helpch.at/helpchat-plugins/deluxemenus" target="_blank">deluxemenus</a></td>
+            <td class="role">custom gui menus</td>
+            <td class="links">
+              <a href="https://github.com/HelpChat/DeluxeMenus-Wiki" target="_blank">legacy wiki</a>
+              <a href="https://www.spigotmc.org/resources/deluxemenus.11734/" target="_blank">spigot</a>
+            </td>
+          </tr>
+          <tr id="deluxetags">
+            <td class="name"><a href="https://wiki.helpch.at/helpchat-plugins/deluxetags" target="_blank">deluxetags</a></td>
+            <td class="role">chat tags</td>
+            <td class="links">
+              <a href="https://www.spigotmc.org/resources/deluxetags.4390/" target="_blank">spigot</a>
+            </td>
+          </tr>
+          <tr id="hdb">
+            <td class="name"><a href="https://www.spigotmc.org/resources/head-database.14280/" target="_blank">headdatabase</a></td>
+            <td class="role">player heads (decor, menus)</td>
+            <td class="links">
+              <a href="https://github.com/Arcaniax-Development/HeadDatabase-API" target="_blank">api</a>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </section>
+
+    <!-- ECONOMY -->
+    <section id="economy">
+      <div class="sec-head">
+        <h2>04 · shops, crates &amp; rewards</h2>
+        <span class="count">4 plugins</span>
+      </div>
+      <table class="plugins">
+        <thead><tr><th style="width:22%">plugin</th><th style="width:30%">role</th><th>docs</th></tr></thead>
+        <tbody>
+          <tr id="shopgui">
+            <td class="name"><a href="https://docs.brcdev.net/" target="_blank">shopgui+</a></td>
+            <td class="role">main server shop</td>
+            <td class="links">
+              <a href="https://github.com/brcdev-minecraft/shopgui-api" target="_blank">api</a>
+            </td>
+          </tr>
+          <tr id="dtltraders">
+            <td class="name"><a href="https://www.spigotmc.org/resources/dtltraders.35890/" target="_blank">dtltraders</a></td>
+            <td class="role">black market shop (rotating)</td>
+            <td class="links">
+              <a href="https://wiki.citizensnpcs.co/DtlTraders" target="_blank">wiki *outdated</a>
+              <a href="https://wiki.citizensnpcs.co/DtlTraders/basics" target="_blank">basics</a>
+            </td>
+          </tr>
+          <tr id="phoenixcrates">
+            <td class="name"><a href="https://www.phoenixplugins.com/docs/phoenix-crates" target="_blank">phoenixcrates</a></td>
+            <td class="role">crate keys / rewards</td>
+            <td class="links">
+              <a href="https://wiki.myphoenixstore.com/" target="_blank">wiki</a>
+              <a href="https://github.com/Phoenix-Plugins/phoenix-crates-wiki" target="_blank">src</a>
+            </td>
+          </tr>
+          <tr id="crazyvouchers">
+            <td class="name"><a href="https://docs.crazycrew.us/docs/category/crazyvouchers" target="_blank">crazyvouchers</a></td>
+            <td class="role">redeemable vouchers</td>
+            <td class="links">
+              <a href="https://docs.crazycrew.us/docs/plugins/crazyvouchers/" target="_blank">getting started</a>
+              <a href="https://github.com/Crazy-Crew/CrazyVouchers" target="_blank">github</a>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </section>
+
+    <!-- ARTILLEX -->
+    <section id="artillex">
+      <div class="sec-head">
+        <h2>05 · artillex suite</h2>
+        <span class="count">6 plugins</span>
+      </div>
+      <table class="plugins">
+        <thead><tr><th style="width:22%">plugin</th><th style="width:30%">role</th><th>docs</th></tr></thead>
+        <tbody>
+          <tr id="axrewards">
+            <td class="name"><a href="https://docs.artillex-studios.com/axrewards.html" target="_blank">axrewards</a></td>
+            <td class="role">vote/daily reward tiers</td>
+            <td class="links"><a href="https://github.com/Artillex-Studios/AxRewards" target="_blank">github</a></td>
+          </tr>
+          <tr id="axrankmenu">
+            <td class="name"><a href="https://hangar.papermc.io/Artillex-Studios/AxRankMenu" target="_blank">axrankmenu</a></td>
+            <td class="role">rank ladder gui</td>
+            <td class="links"><a href="https://github.com/Artillex-Studios/AxRankMenu" target="_blank">github</a></td>
+          </tr>
+          <tr id="axquestboard">
+            <td class="name"><a href="https://docs.artillex-studios.com/axquestboard.html" target="_blank">axquestboard</a></td>
+            <td class="role">quests / objectives</td>
+            <td class="links">
+              <a href="https://docs.artillex-studios.com/axquestboard-configuration.html" target="_blank">config</a>
+              <a href="https://docs.artillex-studios.com/axquestboard-placeholders.html" target="_blank">papi</a>
+            </td>
+          </tr>
+          <tr id="axdarkauctions">
+            <td class="name"><a href="https://docs.artillex-studios.com/axdarkauctions.html" target="_blank">axdarkauctions</a></td>
+            <td class="role">auction house + tax</td>
+            <td class="links"></td>
+          </tr>
+          <tr id="axboosters">
+            <td class="name"><a href="https://docs.artillex-studios.com/axboosters.html" target="_blank">axboosters</a></td>
+            <td class="role">xp / drop boosters</td>
+            <td class="links">
+              <a href="https://docs.artillex-studios.com/axboosters-types.html" target="_blank">types</a>
+              <a href="https://docs.artillex-studios.com/axboosters-commands.html" target="_blank">commands</a>
+            </td>
+          </tr>
+          <tr id="axkills">
+            <td class="name"><a href="https://docs.artillex-studios.com/" target="_blank">axkills</a></td>
+            <td class="role">kill tracking / leaderboards</td>
+            <td class="links"></td>
+          </tr>
+        </tbody>
+      </table>
+    </section>
+
+    <!-- MISC -->
+    <section id="misc">
+      <div class="sec-head">
+        <h2>06 · misc</h2>
+        <span class="count">5 plugins</span>
+      </div>
+      <table class="plugins">
+        <thead><tr><th style="width:22%">plugin</th><th style="width:30%">role</th><th>docs</th></tr></thead>
+        <tbody>
+          <tr id="citizens">
+            <td class="name"><a href="https://wiki.citizensnpcs.co/" target="_blank">citizens2</a></td>
+            <td class="role">npcs</td>
+            <td class="links">
+              <a href="https://wiki.citizensnpcs.co/Commands" target="_blank">commands</a>
+              <a href="https://github.com/CitizensDev/Citizens2" target="_blank">github</a>
+            </td>
+          </tr>
+          <tr id="auraskills">
+            <td class="name"><a href="https://wiki.aurelium.dev/auraskills/" target="_blank">auraskills</a></td>
+            <td class="role">rpg skills</td>
+            <td class="links">
+              <a href="https://wiki.aurelium.dev/auraskills/skills/" target="_blank">skills</a>
+              <a href="https://github.com/Archy-X/AuraSkills" target="_blank">github</a>
+            </td>
+          </tr>
+          <tr id="chatmanager">
+            <td class="name"><a href="https://github.com/Crazy-Crew/ChatManager" target="_blank">chatmanager</a></td>
+            <td class="role">chat formatting / join msg</td>
+            <td class="links"><a href="https://github.com/Crazy-Crew/ChatManager/issues" target="_blank">issues</a></td>
+          </tr>
+          <tr id="playtime">
+            <td class="name"><a href="https://www.spigotmc.org/resources/playtime.120015/" target="_blank">playtime</a></td>
+            <td class="role">playtime tracking + milestones</td>
+            <td class="links"></td>
+          </tr>
+          <tr id="lottery">
+            <td class="name"><a href="https://www.spigotmc.org/resources/lottery.22137/" target="_blank">lottery</a></td>
+            <td class="role">weekly lottery</td>
+            <td class="links"><a href="https://www.spigotmc.org/resources/lottery.22137/updates" target="_blank">updates</a></td>
+          </tr>
+        </tbody>
+      </table>
+    </section>
+
+    <!-- NOTES -->
+    <section id="notes">
+      <div class="sec-head">
+        <h2>07 · operator notes</h2>
+        <span class="count">scratchpad</span>
+      </div>
+      <div class="console">
+        <span class="comment"># config discipline</span><br>
+        <span class="prompt">$</span> never reformat existing yaml. targeted edits only.<br>
+        <span class="prompt">$</span> hex colors: <span class="arg">&amp;#RRGGBB</span> · named: <span class="arg">&amp;7 &amp;f &amp;c</span> · no hybrids.<br>
+        <span class="prompt">$</span> broadcast hex (per-char): <span class="arg">#</span> not <span class="arg">&amp;#</span>.<br><br>
+        <span class="comment"># known quirks</span><br>
+        <span class="prompt">$</span> dtltraders display/lore positioning bug — unresolved.<br>
+        <span class="prompt">$</span> crazyvouchers: use <span class="arg">items:</span>, avoid <span class="arg">random-commands:</span>.<br><br>
+        <span class="comment"># branding (in-game only)</span><br>
+        <span class="prompt">$</span> pink: <span class="arg">&amp;#FFAAD4</span> · decorator: <span class="arg">✦</span><br>
+        <span class="cursor"></span>
+      </div>
+    </section>
+
+    <footer>
+      <span>cozy-crafters // ops · season 02</span>
+      <span>last edit · pending</span>
+    </footer>
+
+  </main>
+</div>
+
+</body>
+</html>
