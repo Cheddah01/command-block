@@ -1,0 +1,238 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>editor / cozy-crafters/ops</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@300;400;500;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="assets/styles.css">
+</head>
+<body>
+
+<div class="layout">
+
+  <aside>
+    <div class="brand">
+      <span class="dot"></span>
+      <h1>cozy-crafters<span class="ver">/ops</span></h1>
+    </div>
+
+    <div class="meta">
+      <div class="row"><span>build</span><span>paper 1.21</span></div>
+      <div class="row"><span>season</span><span>02</span></div>
+      <div class="row live"><span>status</span><span>online</span></div>
+    </div>
+
+    <nav>
+      <div class="group">
+        <h2>pages/</h2>
+        <ul>
+          <li><a href="index.html">index</a></li>
+          <li><a href="plugins.html">plugins</a></li>
+          <li><a href="configs.html" class="active">configs</a></li>
+        </ul>
+      </div>
+    </nav>
+  </aside>
+
+  <main class="wide">
+
+    <div class="crumb">
+      ~<span class="sep">/</span>ops<span class="sep">/</span><a href="configs.html">configs</a><span class="sep">/</span><span id="crumb-name">…</span>
+    </div>
+
+    <div class="doc-head">
+      <div class="kicker" id="header-meta">internal · config editor</div>
+      <h1 id="header-title">loading…</h1>
+    </div>
+
+    <div class="action-bar">
+      <button class="btn primary" id="save-btn">save version</button>
+      <input type="text" class="save-note" id="save-note" placeholder="optional note (e.g. 'fixed prefix bug')">
+      <span class="spacer"></span>
+      <span class="status" id="status">—</span>
+      <a class="btn" id="download-btn">download</a>
+    </div>
+
+    <div class="editor-wrap">
+      <div class="editor-host" id="editor"></div>
+
+      <div>
+        <div class="sec-head">
+          <h2><span class="num">[v]</span>history</h2>
+        </div>
+        <div class="versions" id="versions">
+          <div class="empty">loading…</div>
+        </div>
+      </div>
+    </div>
+
+    <footer>
+      <span>cozy-crafters/ops · season 02</span>
+      <span id="footer-status">—</span>
+    </footer>
+
+  </main>
+</div>
+
+<script type="module">
+import { api, API, formatDate } from './assets/app.js';
+import { EditorView, basicSetup } from 'https://esm.sh/codemirror@6.0.1';
+import { EditorState } from 'https://esm.sh/@codemirror/state@6.4.1';
+import { yaml } from 'https://esm.sh/@codemirror/lang-yaml@6.1.1';
+import { keymap } from 'https://esm.sh/@codemirror/view@6.26.3';
+import { indentWithTab } from 'https://esm.sh/@codemirror/commands@6.6.0';
+
+const $ = (id) => document.getElementById(id);
+
+const params = new URLSearchParams(window.location.search);
+const configId = params.get('id');
+if (!configId) {
+  document.body.innerHTML = '<p style="padding:40px">no config id specified.</p>';
+  throw new Error('no id');
+}
+
+let editor;
+let currentConfig = null;
+
+async function loadConfig() {
+  try {
+    const cfg = await api(`/configs/${configId}`);
+    currentConfig = cfg;
+
+    $('crumb-name').textContent = cfg.name;
+    $('header-title').innerHTML = `${escapeHtml(cfg.name)} <span class="dim">// ${escapeHtml(cfg.plugin || 'unassigned')}</span>`;
+    $('header-meta').textContent = `internal · last updated ${formatDate(cfg.updated_at)}`;
+    $('download-btn').href = `${API}/configs/${cfg.id}/download`;
+
+    initEditor(cfg.content || '');
+    loadVersions();
+  } catch (err) {
+    $('header-title').textContent = `error loading: ${err.message}`;
+  }
+}
+
+function initEditor(content) {
+  if (editor) editor.destroy();
+  editor = new EditorView({
+    state: EditorState.create({
+      doc: content,
+      extensions: [
+        basicSetup,
+        yaml(),
+        keymap.of([indentWithTab]),
+      ],
+    }),
+    parent: $('editor'),
+  });
+}
+
+async function loadVersions() {
+  try {
+    const versions = await api(`/configs/${configId}/versions`);
+    const host = $('versions');
+
+    if (versions.length === 0) {
+      host.innerHTML = '<div class="empty">no versions</div>';
+      return;
+    }
+
+    host.innerHTML = versions.map(v => {
+      const isCurrent = v.id === currentConfig.current_version_id;
+      return `
+        <div class="ver-item ${isCurrent ? 'current' : ''}" data-vid="${v.id}">
+          <div class="meta">
+            v${v.id} · ${formatDate(v.created_at)}
+            ${isCurrent ? '<span class="badge">current</span>' : ''}
+          </div>
+          <div class="note">${escapeHtml(v.note || '—')}</div>
+        </div>
+      `;
+    }).join('');
+
+    host.querySelectorAll('.ver-item').forEach(el => {
+      el.addEventListener('click', () => openVersion(el.dataset.vid));
+    });
+  } catch (err) {
+    $('versions').innerHTML = `<div class="empty">error: ${err.message}</div>`;
+  }
+}
+
+async function openVersion(vid) {
+  try {
+    const ver = await api(`/configs/${configId}/versions/${vid}`);
+    if (vid == currentConfig.current_version_id) {
+      // already current, just reload into editor
+      initEditor(ver.content);
+      setStatus(`viewing current (v${vid})`, '');
+      return;
+    }
+    if (!confirm(`load version v${vid} into the editor?\n\nyou can review/save it as a new version, or click "restore" to make it current.`)) return;
+    initEditor(ver.content);
+    setStatus(`viewing v${vid} (not saved)`, '');
+
+    // offer restore
+    if (confirm(`restore v${vid} as the current version now?`)) {
+      await api(`/configs/${configId}/restore/${vid}`, { method: 'POST' });
+      setStatus(`restored v${vid}`, 'ok');
+      await loadConfig();
+    }
+  } catch (err) {
+    setStatus(`error: ${err.message}`, 'err');
+  }
+}
+
+async function save() {
+  if (!editor) return;
+  const content = editor.state.doc.toString();
+  const note = $('save-note').value;
+
+  setStatus('saving...', '');
+  $('save-btn').disabled = true;
+
+  try {
+    await api(`/configs/${configId}`, {
+      method: 'PUT',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ content, note }),
+    });
+    setStatus('saved', 'ok');
+    $('save-note').value = '';
+    await loadConfig();
+  } catch (err) {
+    setStatus(`error: ${err.message}`, 'err');
+  } finally {
+    $('save-btn').disabled = false;
+  }
+}
+
+function setStatus(text, kind) {
+  const el = $('status');
+  el.textContent = text;
+  el.className = 'status ' + (kind || '');
+}
+
+function escapeHtml(s) {
+  if (s == null) return '';
+  return String(s).replace(/[&<>"']/g, c => ({
+    '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;'
+  }[c]));
+}
+
+$('save-btn').addEventListener('click', save);
+
+// Ctrl/Cmd+S to save
+window.addEventListener('keydown', (e) => {
+  if ((e.ctrlKey || e.metaKey) && e.key === 's') {
+    e.preventDefault();
+    save();
+  }
+});
+
+loadConfig();
+</script>
+
+</body>
+</html>
