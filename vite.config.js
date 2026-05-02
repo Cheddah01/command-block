@@ -12,11 +12,12 @@ export default defineConfig({
     rollupOptions: {
       input: {
         main: resolve(root, 'index.html'),
-        plugins: resolve(root, 'plugins.html'),
-        configs: resolve(root, 'configs.html'),
-        config: resolve(root, 'config.html'),
-        reference: resolve(root, 'reference.html'),
         notfound: resolve(root, '404.html'),
+        opsIndex: resolve(root, 'ops/index.html'),
+        opsPlugins: resolve(root, 'ops/plugins.html'),
+        opsConfigs: resolve(root, 'ops/configs.html'),
+        opsConfig: resolve(root, 'ops/config.html'),
+        opsReference: resolve(root, 'ops/reference.html'),
       },
     },
   },

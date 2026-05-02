@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>cozy-crafters/ops</title>
+<title>command-block</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@300;400;500;600&display=swap" rel="stylesheet">
@@ -11,132 +11,18 @@
 </head>
 <body>
 
-<div class="layout">
-
-  <!-- ============ SIDEBAR ============ -->
-  <aside>
-    <div class="brand">
-      <span class="dot"></span>
-      <h1>cozy-crafters<span class="ver">/ops</span></h1>
-    </div>
-
-    <div class="meta">
-      <div class="row"><span>build</span><span>paper 1.21</span></div>
-      <div class="row"><span>season</span><span>02</span></div>
-      <div class="row live"><span>status</span><span>online</span></div>
-    </div>
-
-    <nav>
-      <div class="group">
-        <h2>pages/</h2>
-        <ul>
-          <li><a href="index.html" class="active">index</a></li>
-          <li><a href="plugins.html">plugins</a></li>
-          <li><a href="configs.html">configs</a></li>
-          <li><a href="reference.html">reference</a></li>
-        </ul>
-      </div>
-    </nav>
-  </aside>
-
-  <!-- ============ MAIN ============ -->
-  <main>
-
-    <div class="crumb">
-      ~<span class="sep">/</span>ops<span class="sep">/</span>index
-    </div>
-
-    <div class="banner" aria-hidden="true">
-      <pre class="ascii-banner">
+<main class="public-home">
+  <pre class="ascii-banner" aria-hidden="true">
  ███   ███  █   █ █   █  ███  █   █ ████    ████  █      ███   ███  █   █
 █   █ █   █ ██ ██ ██ ██ █   █ ██  █ █   █   █   █ █     █   █ █   █ █  █
 █     █   █ █ █ █ █ █ █ █████ █ █ █ █   █   ████  █     █   █ █     ███
 █   █ █   █ █   █ █   █ █   █ █  ██ █   █   █   █ █     █   █ █   █ █  █
  ███   ███  █   █ █   █ █   █ █   █ ████    ████  █████  ███   ███  █   █</pre>
-      <p class="banner-sub">Tools made for server owners, by server owners.</p>
-    </div>
 
-    <div class="doc-head">
-      <div class="kicker">internal · admin reference</div>
-      <h1>command-block <span class="dim">// admin tool</span></h1>
-      <p>pick a thing to do.</p>
-      <p class="tip" id="tip"></p>
-    </div>
+  <p class="public-tagline">tools for minecraft server owners.</p>
 
-    <section>
-      <div class="sec-head">
-        <h2><span class="num">[01]</span>actions</h2>
-        <span class="count">6 cards</span>
-      </div>
-      <div class="actions">
-        <a class="card" href="plugins.html#upload">
-          <div class="card-body">
-            <div class="card-label">upload plugin</div>
-            <div class="card-desc">add a new jar to the archive</div>
-          </div>
-          <div class="card-arrow">&rarr;</div>
-        </a>
-        <a class="card" href="plugins.html">
-          <div class="card-body">
-            <div class="card-label">browse plugins</div>
-            <div class="card-desc">list, download, or delete uploaded jars</div>
-          </div>
-          <div class="card-arrow">&rarr;</div>
-        </a>
-        <a class="card" href="configs.html#upload">
-          <div class="card-body">
-            <div class="card-label">upload config</div>
-            <div class="card-desc">add a new yaml to the archive</div>
-          </div>
-          <div class="card-arrow">&rarr;</div>
-        </a>
-        <a class="card" href="configs.html">
-          <div class="card-body">
-            <div class="card-label">browse configs</div>
-            <div class="card-desc">edit, version, or download yaml files</div>
-          </div>
-          <div class="card-arrow">&rarr;</div>
-        </a>
-        <a class="card" href="reference.html">
-          <div class="card-body">
-            <div class="card-label">plugin reference</div>
-            <div class="card-desc">docs and links for every plugin</div>
-          </div>
-          <div class="card-arrow">&rarr;</div>
-        </a>
-        <a class="card" href="reference.html#notes">
-          <div class="card-body">
-            <div class="card-label">operator notes</div>
-            <div class="card-desc">config discipline, quirks, branding</div>
-          </div>
-          <div class="card-arrow">&rarr;</div>
-        </a>
-      </div>
-    </section>
-
-    <footer>
-      <span>cozy-crafters/ops · season 02</span>
-      <span>last edit · pending</span>
-    </footer>
-
-  </main>
-</div>
-
-<script>
-  const tips = [
-    'configs are versioned forever. delete with care.',
-    'cmd+s saves a config version. note field is optional.',
-    'never reformat existing yaml. targeted edits only.',
-    'hex colors use &#RRGGBB. named colors use &7, &f, &c. no hybrids.',
-    'broadcast hex (per-character) uses # not &#.',
-    'crazyvouchers: items: works. random-commands: lies.',
-    'jars upload to r2. configs live in d1.',
-    'restoring a version creates a new version. nothing is ever lost.',
-    'cloudflare access cookies expire after 24h.',
-    'this site has no analytics. nobody is watching. relax.',
-  ];
-  document.getElementById('tip').textContent = '// tip: ' + tips[Math.floor(Math.random() * tips.length)];
-</script>
+  <p class="public-intro">placeholder copy. real intro coming soon.</p>
+</main>
 
 </body>
 </html>
